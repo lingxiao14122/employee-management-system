@@ -1,0 +1,22 @@
+Employee Information
+1 ID Int(10)
+2 Name Varchar(20)
+6 Gender Varchar(10)
+7 Position Varchar(20)
+8 Height Int(10)
+9 Phonenumber Varchar(30)
+10 Email Varchar(20)
+11 Address Varchar(100)
+
+Employee Login
+1 Employee ID
+2 Username
+3 Password
+4 Usertype
+
+Attendence
+1 ID
+2 Employee ID
+3 Date/Time
+4 Status
+5 Comment
