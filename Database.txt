@@ -8,7 +8,7 @@ Employee Info
 10 Email Varchar(20)
 11 Address Varchar(100)
 12 Payroll/Salary
-
+zzzz
 Login Info
 1 Employee ID
 2 Username
