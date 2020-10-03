@@ -7,6 +7,7 @@ Employee Information
 9 Phonenumber Varchar(30)
 10 Email Varchar(20)
 11 Address Varchar(100)
+12 Payroll/Salary
 
 Employee Login
 1 Employee ID
@@ -19,4 +20,12 @@ Attendence
 2 Employee ID
 3 Date/Time
 4 Status
-5 Comment
+5 Remark
+
+Leave Application
+1 ID
+2 Employee
+3 Reason
+4 Date Requested
+5 Approval
+6 Remark
