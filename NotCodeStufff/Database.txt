@@ -1,31 +1,31 @@
 Employee Info
 1 ID Int(10)
 2 Name Varchar(20)
-6 Gender Varchar(10)
-7 Position Varchar(20)
-8 Height Int(10)
-9 Phone Varchar(30)
-10 Email Varchar(20)
-11 Address Varchar(100)
-12 Payroll/Salary
-zzzz
+3 Gender Varchar(10)
+4 Position Varchar(20)
+5 Height Int(10)
+6 Phone Varchar(30)
+7 Email Varchar(20)
+8 Address Varchar(100)
+9 Payroll/Salary Int(10)
+
 Login Info
-1 Employee ID
-2 Username
-3 Password
-4 Usertype
+1 Employee ID Int(10)
+2 Username Varchar(20)
+3 Password Varchar(20)
+4 Usertype Varchar(10)
 
 Attendence
-1 ID
-2 Employee ID
-3 Date/Time
-4 Status
-5 Remark
+1 ID Int(10)
+2 EmployeeID Int(10)
+3 Date/Time DateTime
+4 Status Varchar(10)
+5 Remark Varchar(20)
 
 Leave Application
-1 ID
-2 Employee ID
-3 Reason
-4 Date Requested
-5 Approval
-6 Remark
+1 ID Int(10)
+2 EmployeeID Int(10)
+3 Reason Varchar(20)
+4 Date Requested Date
+5 Approval BOOLEAN
+6 Remark Varchar(20)
