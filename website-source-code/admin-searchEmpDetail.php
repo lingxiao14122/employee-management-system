@@ -103,11 +103,11 @@
             border-color: black;
             border-style: solid;
             border-width: 1px;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
+            font-weight: 500;
             overflow: hidden;
-            padding: 10px 5px;
+            padding: 10px 20px;
             word-break: normal;
+            border-radius: 5px;
         }
 
         .tg th {
@@ -118,21 +118,42 @@
             font-size: 14px;
             font-weight: normal;
             overflow: hidden;
-            padding: 10px 5px;
+            padding: 10px 20px;
             word-break: normal;
         }
 
-        .tg .tg-0pky {
-            border-color: inherit;
+        .tg .tg-0lax {
             text-align: left;
             vertical-align: top
         }
 
+
+
+        table {
+            border-style: solid;
+        }
+
         .attendance-table-div {
-            
-            
+
+
             border-width: 4px;
             height: 25em;
+        }
+
+        .search-input {
+            width: 40em;
+            margin-bottom: 20px;
+            margin-right: 11px;
+            border-radius: 9px;
+            /* border: black; */
+            border-color: black;
+            height: 2.75em;
+        }
+
+        .search-label {
+            font-size: 22px;
+            margin: 7px 2px;
+        
         }
     </style>
 </head>
@@ -158,43 +179,56 @@
 
                     <div class="8u skel-cell-important">
                         <section>
-                            <h2>Attendance</h2>
-                            <!--The two white and grey attendance card main div-->
-                            <div class="attendance">
-                                <!--White card-->
-                                <div class="attendance-card attendance-present">
-                                    <div class="attendance-text">
-                                        <p class=" attendance-count">0</p>
-                                    </div>
-                                    <div class="attendance-text">
-                                        <p class="attendance-p ">Present</p>
-                                    </div>
-                                </div>
-                                <!--Grey card-->
-                                <div class="attendance-card attendance-absent">
-                                    <div class="attendance-text">
-                                        <p class=" attendance-count">0</p>
-                                    </div>
-                                    <div class="attendance-text">
-                                        <p class="attendance-p ">Absent</p>
-                                    </div>
-                                </div>
+                            <h2>Search Employee Detail</h2><i class="glyphicon glyphicon-search"></i>
+
+                            <div class="form-group">
+                                <label class="search-label">Name</label>
+
+                                <input class="search-input ">
+                                <button type="submit" class="special btn-admin-search">SEARCH</button>
                             </div>
-                            <hr />
-                            <h2>Check In/ Check Out</h2>
+                            <div class="form-group">
+
+
+
+
+                            </div>
 
                             <div class="attendance-table-div">
                                 <table class="tg">
-                                    <thead>
-                                        <tr>
-                                            <th class="tg-0pky">No.</th>
-                                            <th class="tg-0lax">Name</th>
-                                            <th class="tg-0lax">Status/Action</th>
-                                            <th class="tg-0lax">Timestamp</th>
-                                        </tr>
-                                    </thead>
+
+
+
                                     <tbody>
+
                                         <tr>
+                                            <td class="tg-0lax">ID</td>
+                                            <td class="tg-0lax">Name</td>
+                                            <td class="tg-0lax">Gender</td>
+                                            <td class="tg-0lax">Position</td>
+                                            <td class="tg-0lax">Height</td>
+                                            <td class="tg-0lax">Phone</td>
+                                            <td class="tg-0lax">Email</td>
+                                            <td class="tg-0lax">Address</td>
+                                            <td class="tg-0lax">Payroll</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0lax"></td>
+                                            <td class="tg-0lax"></td>
+                                            <td class="tg-0lax"></td>
+                                            <td class="tg-0lax"></td>
+                                            <td class="tg-0lax"></td>
+                                            <td class="tg-0lax"></td>
+                                            <td class="tg-0lax"></td>
+                                            <td class="tg-0lax"></td>
+                                            <td class="tg-0lax"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="tg-0lax"></td>
+                                            <td class="tg-0lax"></td>
+                                            <td class="tg-0lax"></td>
+                                            <td class="tg-0lax"></td>
+                                            <td class="tg-0lax"></td>
                                             <td class="tg-0lax"></td>
                                             <td class="tg-0lax"></td>
                                             <td class="tg-0lax"></td>

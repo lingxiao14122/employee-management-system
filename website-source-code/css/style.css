@@ -1182,7 +1182,24 @@ input[type="button"]:disabled,
   background-color: rgb(172, 172, 172);
 }
 
+.btn-admin-search {
+  background-color: #76a9d7;
+  border: none;
+  color: white;
+  padding: 13px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 2px 2px;
+  cursor: pointer;
+  border-radius: 9px;
+}
 
+.btn-admin-search:hover {
+  background-color: #94badb;
+  color: white;
+}
 
 /*admin-dashboard admin-dashboard admin-dashboard admin-dashboard admin-dashboard admin-dashboard admin-dashboard */
 /*admin-dashboard admin-dashboard admin-dashboard admin-dashboard admin-dashboard admin-dashboard admin-dashboard */
