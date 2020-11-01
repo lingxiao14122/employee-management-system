@@ -93,6 +93,47 @@
             margin: 109px;
             font-size: 96px;
         }
+
+        .tg {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .tg td {
+            border-color: black;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+
+        .tg th {
+            border-color: black;
+            border-style: solid;
+            border-width: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: normal;
+            overflow: hidden;
+            padding: 10px 5px;
+            word-break: normal;
+        }
+
+        .tg .tg-0pky {
+            border-color: inherit;
+            text-align: left;
+            vertical-align: top
+        }
+
+        .attendance-table-div {
+            
+            
+            border-width: 4px;
+            height: 25em;
+        }
     </style>
 </head>
 
@@ -153,29 +194,28 @@
                             <hr />
                             <h2>Check In/ Check Out</h2>
 
-                            <p>
-                                Vis accumsan feugiat adipiscing nisl amet adipiscing accumsan
-                                blandit accumsan sapien blandit ac amet faucibus aliquet
-                                placerat commodo. Interdum ante aliquet commodo accumsan vis
-                                phasellus adipiscing. Ornare a in lacinia. Vestibulum accumsan
-                                ac metus massa tempor. Accumsan in lacinia ornare massa amet. Ac
-                                interdum ac non praesent. Cubilia lacinia interdum massa
-                                faucibus blandit nullam. Accumsan phasellus nunc integer.
-                                Accumsan euismod nunc adipiscing lacinia erat ut sit. Arcu amet.
-                                Id massa aliquet arcu accumsan lorem amet accumsan commodo odio
-                                cubilia ac eu interdum placerat placerat arcu commodo lobortis
-                                adipiscing semper ornare pellentesque.
-                            </p>
-                            <p>
-                                Amet nibh adipiscing adipiscing. Commodo ante vis placerat
-                                interdum massa massa primis. Tempus condimentum tempus non ac
-                                varius cubilia adipiscing placerat lorem turpis at. Aliquet
-                                lorem porttitor interdum. Amet lacus. Aliquam lobortis faucibus
-                                blandit ac phasellus. In amet magna non interdum volutpat
-                                porttitor metus a ante ac neque. Nisi turpis. Commodo col.
-                                Interdum adipiscing mollis ut aliquam id ante adipiscing commodo
-                                integer arcu amet blandit adipiscing arcu ante.
-                            </p>
+                            <div class="attendance-table-div">
+                                <table class="tg">
+                                    <thead>
+                                        <tr>
+                                            <th class="tg-0pky">No.</th>
+                                            <th class="tg-0lax">Name</th>
+                                            <th class="tg-0lax">Status/Action</th>
+                                            <th class="tg-0lax">Timestamp</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="tg-0lax"></td>
+                                            <td class="tg-0lax"></td>
+                                            <td class="tg-0lax"></td>
+                                            <td class="tg-0lax"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
                         </section>
                     </div>
                 </div>
