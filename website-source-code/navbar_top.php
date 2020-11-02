@@ -10,7 +10,14 @@
           <li><a href="admin-dashboard.php">Left Sidebar</a></li>
           <li><a href="template-right-sidebar.html">Right Sidebar</a></li>
           <li><a href="template-no-sidebar.html">No Sidebar</a></li>
-          <li><a href="login.php" class="button special">Login In</a></li>
+
+          <?php
+          if(!isset($_COOKIE["PHPSESSID"])){
+            echo "<li><a href=\"login.php\" class=\"button special\">Login In</a></li>";
+          } else {
+            echo "<li><a href=\"logout_process.php\" class=\"button special\">Login Out</a></li>";
+          }
+          ?>
         </ul>
       </nav>
     </header>

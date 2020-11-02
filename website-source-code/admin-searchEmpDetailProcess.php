@@ -1,48 +1,3 @@
-<?php
-    if(isset($_POST["submit"])){
-        include_once("dbcon.php");
-
-        echo "<table class=\"tg\">
-            <tbody>
-                <tr>
-                    <td class=\"tg-0lax\">ID</td>
-                    <td class=\"tg-0lax\">Name</td>
-                    <td class=\"tg-0lax\">Gender</td>
-                    <td class=\"tg-0lax\">Position</td>
-                    <td class=\"tg-0lax\">Height</td>
-                    <td class=\"tg-0lax\">Phone</td>
-                    <td class=\"tg-0lax\">Email</td>
-                    <td class=\"tg-0lax\">Address</td>
-                    <td class=\"tg-0lax\">Payroll</td>
-                </tr>
-                <tr>
-                    <td class=\"tg-0lax\"></td>
-                    <td class=\"tg-0lax\"></td>
-                    <td class=\"tg-0lax\"></td>
-                    <td class=\"tg-0lax\"></td>
-                    <td class=\"tg-0lax\"></td>
-                    <td class=\"tg-0lax\"></td>
-                    <td class=\"tg-0lax\"></td>
-                    <td class=\"tg-0lax\"></td>
-                    <td class=\"tg-0lax\"></td>
-                </tr>
-                <tr>
-                    <td class=\"tg-0lax\"></td>
-                    <td class=\"tg-0lax\"></td>
-                    <td class=\"tg-0lax\"></td>
-                    <td class=\"tg-0lax\"></td>
-                    <td class=\"tg-0lax\"></td>
-                    <td class=\"tg-0lax\"></td>
-                    <td class=\"tg-0lax\"></td>
-                    <td class=\"tg-0lax\"></td>
-                    <td class=\"tg-0lax\"></td>
-                </tr>
-            </tbody>
-        </table>";
-    }
-
-?>
-
 <!DOCTYPE html>
 <!--
 	Ion by TEMPLATED
@@ -238,7 +193,59 @@
                             </div>
 
                             <div class="attendance-table-div">
-                                
+                                <?php 
+                                        include_once("dbcon.php");
+
+                                        if(isset($_POST["submit"])){
+                                            $name = $_POST["name"];
+
+                                        if($name == "all" || $name == "All" || $name == "ALL"){
+                                            $query = "SELECT * FROM `employeeinfo`";
+                                        } else {
+                                            $query = "SELECT * FROM `employeeinfo` WHERE `name` = '$name'";
+                                        }
+
+                                        $result = $con->query($query);
+
+                                        if($result->num_rows > 0){
+                                            echo "<table class=\"tg\">
+                                                <tbody>
+                                                    <tr>
+                                                        <td class=\"tg-0lax\">ID</td>
+                                                        <td class=\"tg-0lax\">Name</td>
+                                                        <td class=\"tg-0lax\">Gender</td>
+                                                        <td class=\"tg-0lax\">Position</td>
+                                                        <td class=\"tg-0lax\">Height</td>
+                                                        <td class=\"tg-0lax\">Phone</td>
+                                                        <td class=\"tg-0lax\">Email</td>
+                                                        <td class=\"tg-0lax\">Address</td>
+                                                        <td class=\"tg-0lax\">Payroll</td>
+                                                    </tr>
+                                            ";
+
+                                            while($row = $result->fetch_assoc()){
+                                                echo "<tr>
+                                                        <td class=\"tg-0lax\">".$row["ID"]."</td>
+                                                        <td class=\"tg-0lax\">".$row["name"]."</td>
+                                                        <td class=\"tg-0lax\">".$row["gender"]."</td>
+                                                        <td class=\"tg-0lax\">".$row["position"]."</td>
+                                                        <td class=\"tg-0lax\">".$row["height"]."</td>
+                                                        <td class=\"tg-0lax\">".$row["phone"]."</td>
+                                                        <td class=\"tg-0lax\">".$row["email"]."</td>
+                                                        <td class=\"tg-0lax\">".$row["address"]."</td>
+                                                        <td class=\"tg-0lax\">".$row["payroll"]."</td>
+                                                    </tr>";
+                                            }
+                                            echo "</tbody>
+                                            </table>";
+                                        } else {
+                                            echo "No record";
+                                        }
+                                        }
+
+                                        
+                                    
+                                ?>
                             </div>
 
 

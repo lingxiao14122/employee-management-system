@@ -58,6 +58,7 @@
                 <div class="col-md-12">
                   <input
                     type="submit"
+                    name="submit"
                     value="login now"
                     class="btn btn-primary btn-block py-3"
                   />

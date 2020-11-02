@@ -1,3 +1,9 @@
+<?php
+    if (isset($_COOKIE["PHPSESSID"])){
+        session_start();
+    }
+?>
+
 <!DOCTYPE html>
 <!--
 	Ion by TEMPLATED
@@ -144,7 +150,7 @@
     <!-- Main -->
     <section id="main" class="wrapper style1">
         <header class="major">
-            <h2>Hi, admin</h2>
+            <h2>Hi, <?php echo $_SESSION["name"]; ?> Admin</h2>
             <p>Welcome to dashboard, you may browse at navigation</p>
         </header>
         <div class="container">
