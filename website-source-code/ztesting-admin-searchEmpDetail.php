@@ -173,7 +173,7 @@
                 <div class="row-admin-dashboard">
                     <div class="navigation-admin-dashboard">
 
-                        <?php include("admin-navigationBar.php") ?>
+                        <?php include("admin-navigation.php") ?>
 
                     </div>
 

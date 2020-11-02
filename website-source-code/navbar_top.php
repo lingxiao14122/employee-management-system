@@ -7,7 +7,7 @@
       <nav id="nav">
         <ul>
           <li><a href="index.php">Home</a></li>
-          <li><a href="admin-dashboard.php">Left Sidebar</a></li>
+          <li><a href="testing-user-dashboard.php">Left Sidebar</a></li>
           <li><a href="template-right-sidebar.html">Right Sidebar</a></li>
           <li><a href="template-no-sidebar.html">No Sidebar</a></li>
 

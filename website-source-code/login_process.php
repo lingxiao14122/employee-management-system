@@ -20,7 +20,7 @@
             $_SESSION["name"] = $rows["name"];
             echo "<script type='text/javascript'>alert('Login Successful, ".$_SESSION["name"]."');window.location='admin-dashboard.php';</script>";
         } else {
-            echo "<script type='text/javascript'>alert('Login Successful');window.location='userindex.php';</script>";
+            echo "<script type='text/javascript'>alert('Login Successful');window.location='testing-user-dashboard.php';</script>";
         }
     } else {
         echo "<script type='text/javascript'>alert('Username or Password is incorrect');window.location='login.php';</script>";

@@ -1,9 +1,3 @@
-<?php
-    if (isset($_COOKIE["PHPSESSID"])){
-        session_start();
-    }
-?>
-
 <!DOCTYPE html>
 <!--
 	Ion by TEMPLATED
@@ -62,45 +56,51 @@
             width: 300px;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            margin: 47px 76px;
+            margin: 46px 0px;
+            margin-left: 42px;
         }
 
         .attendance-card:hover {
             box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
         }
 
-        .attendance-present {
-            background: white;
+        /* LEFT SIDE CUSTOM CSS LEFT SIDE CUSTOM CSS */
+        .float-left {
+            float: left;
         }
 
-        .attendance-absent {
-            background-color: rgba(0, 0, 0, 0.12);
+        .attendance-left {
+            width: 485px;
         }
 
-        .attendance-text {
-            width: fit-content;
-
-            position: relative;
-            margin: 10px auto;
-
+        .card-info {
+            margin: 122px 41px;
         }
 
-        .attendance-p {
-            width: fit-content;
-            text-align: center;
-            margin-top: 5px;
-            margin-bottom: 5px;
-            font-size: 25px;
+        .card-left {
+            font-size: 24px;
+            margin: 7px 23px;
         }
 
-        .attendance-count {
-            width: fit-content;
-            text-align: center;
-            margin: 109px;
-            font-size: 96px;
+        .card-left-num {
+            font-size: 56px;
         }
 
-        .tg {
+        /* RIGHT SIDE CUSTOM CSS RIGHT SIDE CUSTOM CSS */
+        .attendance-right {}
+
+        .card-info-right {
+            margin: 49px 0px;
+        }
+
+        .card-right {
+            font-size: 24px;
+            margin: 10px 47px;
+        }
+
+        /* Table Table Table */
+
+        /* .tg {
             border-collapse: collapse;
             border-spacing: 0;
         }
@@ -132,11 +132,11 @@
             border-color: inherit;
             text-align: left;
             vertical-align: top
-        }
+        }*/
 
         .attendance-table-div {
-            
-            
+
+
             border-width: 4px;
             height: 25em;
         }
@@ -150,7 +150,7 @@
     <!-- Main -->
     <section id="main" class="wrapper style1">
         <header class="major">
-            <h2>Hi, <?php echo $_SESSION["name"]; ?> Admin</h2>
+            <h2>Hi, user</h2>
             <p>Welcome to dashboard, you may browse at navigation</p>
         </header>
         <div class="container">
@@ -158,8 +158,7 @@
                 <div class="row-admin-dashboard">
                     <div class="navigation-admin-dashboard">
 
-                        <?php include("admin-navigation.php") ?>
-
+                        <?php include("user-navigation.php") ?>
                     </div>
 
                     <div class="8u skel-cell-important">
@@ -168,43 +167,53 @@
                             <!--The two white and grey attendance card main div-->
                             <div class="attendance">
                                 <!--White card-->
-                                <div class="attendance-card attendance-present">
-                                    <div class="attendance-text">
-                                        <p class=" attendance-count">0</p>
-                                    </div>
-                                    <div class="attendance-text">
-                                        <p class="attendance-p ">Present</p>
+                                <div class="attendance-card attendance-left">
+                                    <div class="card-info">
+                                        <div class="card-left float-left">
+                                            Avg Hours/Day
+                                        </div>
+                                        <div class="card-left-num float-left">
+                                            0.0
+                                        </div>
+                                        <div class="card-left float-left">
+                                            hrs
+                                        </div>
                                     </div>
                                 </div>
                                 <!--Grey card-->
-                                <div class="attendance-card attendance-absent">
-                                    <div class="attendance-text">
-                                        <p class=" attendance-count">0</p>
-                                    </div>
-                                    <div class="attendance-text">
-                                        <p class="attendance-p ">Absent</p>
+                                <div class="attendance-card attendance-right">
+                                    <div class="card-info-right">
+                                        <div class="card-right float-left">
+                                            TUE 01,NOV 2020
+                                        </div>
+                                        <div class="card-right float-left">
+                                            12:10AM
+                                        </div>
+                                        <div class="card-right float-left">
+                                            <button type="submit" name="submit" class="special btn-admin-search" value="submit">Clock In</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <hr />
-                            <h2>Check In/ Check Out</h2>
+                            <h2>Attendance Log - 30 days</h2>
 
                             <div class="attendance-table-div">
                                 <table class="tg">
                                     <thead>
                                         <tr>
-                                            <th class="tg-0pky">No.</th>
-                                            <th class="tg-0lax">Name</th>
-                                            <th class="tg-0lax">Status/Action</th>
-                                            <th class="tg-0lax">Timestamp</th>
+                                            <th class="tg-0pky">Date</th>
+                                            <th class="tg-0lax">Duration</th>
+                                            <th class="tg-0lax">Effective Hours</th>
+                                            <th class="tg-0lax">Arrival</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td class="tg-0lax"></td>
-                                            <td class="tg-0lax"></td>
-                                            <td class="tg-0lax"></td>
-                                            <td class="tg-0lax"></td>
+                                            <td class="tg-0lax">03/11 TUE</td>
+                                            <td class="tg-0lax">Logged in 8:30AM - 5:33PM</td>
+                                            <td class="tg-0lax">9.05 hrs</td>
+                                            <td class="tg-0lax">0.5hrs late</td>
                                         </tr>
                                     </tbody>
                                 </table>
