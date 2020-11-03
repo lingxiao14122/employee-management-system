@@ -140,6 +140,11 @@
             border-width: 4px;
             height: 25em;
         }
+
+        input[type="submit"]:focus {
+            outline: none;
+
+        }
     </style>
 </head>
 
@@ -202,7 +207,7 @@
                                             12:10AM
                                         </div>
                                         <div class="card-right float-left">
-                                            <button type="submit" name="submit" class="special btn-admin-search" value="submit">Clock In</button>
+                                            <button type="submit" name="submit" class="btn-user-clockin" value="submit">Clock In</button>
                                         </div>
                                     </div>
                                 </div>

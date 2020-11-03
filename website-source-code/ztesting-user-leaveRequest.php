@@ -134,20 +134,46 @@
             vertical-align: top
         }*/
 
-        .attendance-table-div {
+        .page-div-main {
 
 
             border-width: 4px;
-            height: 25em;
+            height: 53em;
         }
 
         button:active {
             outline: black;
         }
 
-        
+        .leave-input {
+            width: 52em;
+            margin-bottom: 20px;
+            margin-right: 11px;
+            border-radius: 9px;
+            /* border: black; */
+            border-color: black;
+            height: 2.75em;
+        }
 
-        
+        .leave-input-fromto {
+            width: 21em;
+            display: inline-block;
+        }
+
+        .leave-label {
+            font-size: 22px;
+            margin: 17px 2px;
+        }
+
+        .leave-label-fromto {
+            display: inline-block;
+            margin-right: 24px;
+        }
+
+        .leave-form {
+            margin: 0 0 2em 0;
+            padding: 0px 13px 0px 0px;
+        }
     </style>
 </head>
 
@@ -172,59 +198,31 @@
                     <div class="8u skel-cell-important">
                         <section>
                             <h2>Attendance</h2>
-                            <!--The two white and grey attendance card main div-->
-                            <div class="attendance">
-                                <!--White card-->
-                                <div class="attendance-card attendance-left">
-                                    <div class="card-info">
-                                        <div class="card-left float-left">
-                                            Avg Hours/Day
-                                        </div>
-                                        <div class="card-left-num float-left">
-                                            0.0
-                                        </div>
-                                        <div class="card-left float-left">
-                                            hrs
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--Grey card-->
-                                <div class="attendance-card attendance-right">
-                                    <div class="card-info-right">
-                                        <div class="card-right float-left">
-                                            TUE 01,NOV 2020
-                                        </div>
-                                        <div class="card-right float-left">
-                                            12:10AM
-                                        </div>
-                                        <div class="card-right float-left">
-                                            <button type="submit" name="submit" class="special btn-admin-search" value="submit">Clock In</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <hr />
-                            <h2>Attendance Log - 30 days</h2>
 
-                            <div class="attendance-table-div">
-                                <table class="tg">
-                                    <thead>
-                                        <tr>
-                                            <th class="tg-0pky">Date</th>
-                                            <th class="tg-0lax">Duration</th>
-                                            <th class="tg-0lax">Effective Hours</th>
-                                            <th class="tg-0lax">Arrival</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="tg-0lax">03/11 TUE</td>
-                                            <td class="tg-0lax">Logged in 8:30AM - 5:33PM</td>
-                                            <td class="tg-0lax">9.05 hrs</td>
-                                            <td class="tg-0lax">0.5hrs late</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+
+                            <div class="page-div-main">
+                                <form action="admin-searchEmpDetailprocess.php" method="POST" class="leave-form">
+
+                                    <label class="leave-label">Employee Name:</label>
+                                    <input class="leave-input" name="reason">
+
+                                    <label class="leave-label">Employee Number:</label>
+                                    <input class="leave-input" name="reason">
+
+                                    <label class="leave-label leave-label-fromto">From:</label>
+                                    <input class="leave-input leave-input-fromto" name="reason">
+
+                                    <label class="leave-label leave-label-fromto">To:</label>
+                                    <input class="leave-input leave-input-fromto" name="reason">
+
+                                    <label class="leave-label">Reason for Absence:</label>
+                                    <input class="leave-input" name="reason">
+
+                                    <label class="leave-label">Remarks:</label>
+                                    <input class="leave-input" name="reason">
+
+                                    <button type="submit" name="submit" class="special btn-admin-search" value="submit">Submit Leave Request</button>
+                                </form>
                             </div>
 
 
