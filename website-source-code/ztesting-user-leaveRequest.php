@@ -87,7 +87,7 @@
         }
 
         /* RIGHT SIDE CUSTOM CSS RIGHT SIDE CUSTOM CSS */
-        .attendance-right {}
+        /* .attendance-right {} */
 
         .card-info-right {
             margin: 49px 0px;

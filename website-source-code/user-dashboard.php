@@ -93,8 +93,7 @@
         }
 
         /* RIGHT SIDE CUSTOM CSS RIGHT SIDE CUSTOM CSS */
-        .attendance-right {}
-
+    
         .card-info-right {
             margin: 49px 0px;
         }
@@ -104,45 +103,7 @@
             margin: 10px 47px;
         }
 
-        /* Table Table Table */
-
-        /* .tg {
-            border-collapse: collapse;
-            border-spacing: 0;
-        }
-
-        .tg td {
-            border-color: black;
-            border-style: solid;
-            border-width: 1px;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            overflow: hidden;
-            padding: 10px 5px;
-            word-break: normal;
-        }
-
-        .tg th {
-            border-color: black;
-            border-style: solid;
-            border-width: 1px;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            font-weight: normal;
-            overflow: hidden;
-            padding: 10px 5px;
-            word-break: normal;
-        }
-
-        .tg .tg-0pky {
-            border-color: inherit;
-            text-align: left;
-            vertical-align: top
-        }*/
-
         .attendance-table-div {
-
-
             border-width: 4px;
             height: 25em;
         }
@@ -151,9 +112,6 @@
             outline: black;
         }
 
-        
-
-        
     </style>
 
     <script type="text/javascript">
@@ -228,13 +186,13 @@
                                 <div class="attendance-card attendance-left">
                                     <div class="card-info">
                                         <div class="card-left float-left">
-                                            Avg Hours/Day
+                                            Days Absent
                                         </div>
                                         <div class="card-left-num float-left">
-                                            0.0
+                                            1
                                         </div>
                                         <div class="card-left float-left">
-                                            hrs
+                                            Days
                                         </div>
                                     </div>
                                 </div>
