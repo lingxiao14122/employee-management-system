@@ -20,7 +20,14 @@
             $_SESSION["name"] = $rows["name"];
             echo "<script type='text/javascript'>alert('Login Successful, ".$_SESSION["name"]."');window.location='admin-dashboard.php';</script>";
         } else {
-            echo "<script type='text/javascript'>alert('Login Successful');window.location='testing-user-dashboard.php';</script>";
+            session_start();
+            echo session_id();
+            $query = 'SELECT * FROM `employeeinfo` WHERE `ID` = "'.$row["employeeID"].'"';
+            $result = $con->query($query);
+            $rows = $result->fetch_assoc();
+            $_SESSION["id"] = $rows["ID"];
+            $_SESSION["name"] = $rows["name"];
+            echo "<script type='text/javascript'>alert('Login Successful, ".$_SESSION["name"]."');window.location='user-dashboard.php';</script>";
         }
     } else {
         echo "<script type='text/javascript'>alert('Username or Password is incorrect');window.location='login.php';</script>";

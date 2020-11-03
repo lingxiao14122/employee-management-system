@@ -1,3 +1,9 @@
+<?php
+    if (isset($_COOKIE["PHPSESSID"])){
+        session_start();
+    }
+?>
+
 <!DOCTYPE html>
 <!--
 	Ion by TEMPLATED
@@ -149,16 +155,60 @@
 
         
     </style>
+
+    <script type="text/javascript">
+    function checkTime(i){
+            if(i < 10){
+                i = "0" + i;
+            }
+            return i;
+        }
+
+        function updateTime(){
+            var now = new Date();
+            var year = now.getFullYear();
+            var month = now.getMonth();
+            var monthString = "";
+            var date = now.getDate();
+            var hour = now.getHours();
+            var min = now.getMinutes();
+            var sec = now.getSeconds();
+            
+            min = checkTime(min);
+            sec = checkTime(sec);
+
+            switch(month){
+                case 0: monthString = "January"; break;
+                case 1: monthString = "February"; break;
+                case 2: monthString = "March"; break;
+                case 3: monthString = "April"; break;
+                case 4: monthString = "May"; break;
+                case 5: monthString = "June"; break;
+                case 6: monthString = "July"; break;
+                case 7: monthString = "August"; break;
+                case 8: monthString = "September"; break;
+                case 9: monthString = "October"; break;
+                case 10: monthString = "November"; break;
+                case 11: monthString = "December"; break;
+            }
+
+            document.getElementById('time').innerHTML = date + " " + monthString + " " + year + "<br>" + hour + ":" + min + ":" + sec;
+            var t = setTimeout(updateTime, 500);
+        }
+    </script>
 </head>
 
-<body id="top">
+<body id="top" onload="updateTime()">
 
-    <?php include("navbar_top.php") ?>
+    <?php 
+        include("navbar_top.php");
+        include("functions.php");
+    ?>
 
     <!-- Main -->
     <section id="main" class="wrapper style1">
         <header class="major">
-            <h2>Hi, user</h2>
+            <h2>Hi, <?php echo $_SESSION["name"];?> user</h2>
             <p>Welcome to dashboard, you may browse at navigation</p>
         </header>
         <div class="container">
@@ -191,38 +241,64 @@
                                 <!--Grey card-->
                                 <div class="attendance-card attendance-right">
                                     <div class="card-info-right">
-                                        <div class="card-right float-left">
+                                        <div class="card-right float-left" id="time">
+                                            
+                                        </div>
+                                        <!--<div class="card-right float-left" id="date">
                                             TUE 01,NOV 2020
                                         </div>
-                                        <div class="card-right float-left">
+                                        <div class="card-right float-left" id="time">
                                             12:10AM
-                                        </div>
+                                        </div>-->
                                         <div class="card-right float-left">
-                                            <button type="submit" name="submit" class="special btn-admin-search" value="submit">Clock In</button>
+                                            <form action="clockInOut_process.php" method="POST">
+                                                <button type="submit" name="submit" class="special btn-admin-search" value="<?php echo checkStatus($_SESSION["id"]);?>"><?php echo checkStatus($_SESSION["id"]);?></button>
+                                            </form>
+                                            
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <hr />
-                            <h2>Attendance Log - 30 days</h2>
+                            <h2>Attendance Log</h2>
 
                             <div class="attendance-table-div">
                                 <table class="tg">
                                     <thead>
                                         <tr>
                                             <th class="tg-0pky">Date</th>
-                                            <th class="tg-0lax">Duration</th>
-                                            <th class="tg-0lax">Effective Hours</th>
-                                            <th class="tg-0lax">Arrival</th>
+                                            <th class="tg-0lax">Time</th>
+                                            <th class="tg-0lax">Status</th>
+                                            <th class="tg-0lax">Remark</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="tg-0lax">03/11 TUE</td>
-                                            <td class="tg-0lax">Logged in 8:30AM - 5:33PM</td>
-                                            <td class="tg-0lax">9.05 hrs</td>
-                                            <td class="tg-0lax">0.5hrs late</td>
-                                        </tr>
+                                        <?php
+                                            require('dbcon.php');
+
+                                            $query = 'SELECT * FROM `attendance` WHERE `employeeID` = "'.$_SESSION["id"].'" ORDER BY `attendance`.`time` DESC';
+                                            $result = $con->query($query);
+
+                                            if($result->num_rows == 0){
+                                                echo "<th class=\"tg-0pky\" colspan=\"4\" align=\"center\">No Record</th>";
+                                            } else {
+                                                $size = 0;
+                                                if($result->num_rows <= 15){
+                                                    $size = $result->num_rows;
+                                                } else {
+                                                    $size = 15;
+                                                }
+                                                for($i = 0; $i < $size; $i++){
+                                                    $row = $result->fetch_assoc();
+                                                    echo "<tr>
+                                                            <th class=\"tg-0pky\">".$row["date"]."</th>
+                                                            <th class=\"tg-0pky\">".$row["time"]."</th>
+                                                            <th class=\"tg-0pky\">".$row["status"]."</th>
+                                                            <th class=\"tg-0pky\">".$row["remark"]."</th>
+                                                    ";
+                                                }
+                                            }
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>

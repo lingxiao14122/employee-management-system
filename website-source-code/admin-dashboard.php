@@ -158,7 +158,7 @@
                 <div class="row-admin-dashboard">
                     <div class="navigation-admin-dashboard">
 
-                        <?php include("admin-navigation.php") ?>
+                        <?php include("admin-navigationBar.php") ?>
 
                     </div>
 

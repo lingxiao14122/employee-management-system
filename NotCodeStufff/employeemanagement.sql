@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 04, 2020 at 11:16 AM
+-- Generation Time: Nov 03, 2020 at 12:34 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.5
 
@@ -18,10 +18,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `employeemangement`
+-- Database: `employeemanagement`
 --
-CREATE DATABASE IF NOT EXISTS `employeemangement` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `employeemangement`;
+CREATE DATABASE IF NOT EXISTS `employeemanagement` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `employeemanagement`;
 
 -- --------------------------------------------------------
 
@@ -33,10 +33,22 @@ DROP TABLE IF EXISTS `attendance`;
 CREATE TABLE `attendance` (
   `ID` int(10) NOT NULL,
   `employeeID` int(10) NOT NULL,
-  `date/time` datetime NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
   `status` varchar(10) NOT NULL,
   `remark` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `attendance`
+--
+
+INSERT INTO `attendance` (`ID`, `employeeID`, `date`, `time`, `status`, `remark`) VALUES
+(1, 2, '2020-11-03', '09:00:00', 'Clock In', ''),
+(2, 1, '2020-11-01', '10:00:00', 'Clock In', ''),
+(3, 2, '2020-11-03', '12:00:00', 'Clock Out', ''),
+(4, 2, '2020-11-03', '13:00:00', 'Clock In', ''),
+(5, 2, '2020-11-03', '19:06:46', 'Clock Out', '');
 
 -- --------------------------------------------------------
 
@@ -62,7 +74,8 @@ CREATE TABLE `employeeinfo` (
 --
 
 INSERT INTO `employeeinfo` (`ID`, `name`, `gender`, `position`, `height`, `phone`, `email`, `address`, `payroll`) VALUES
-(1, 'aaa', 'male', 'cleck', 170, '0123456789', 'aaa@isp.com', '1-2-15, Condo. A', 1500);
+(1, 'aaa', 'male', 'cleck', 170, '0123456789', 'aaa@isp.com', '1-2-15, Condo. A', 1500),
+(2, 'bbb', 'female', 'cleck', 170, '0123456789', 'bbb@isp.com', '1-2-15, Condo. A', 1500);
 
 -- --------------------------------------------------------
 
@@ -99,7 +112,8 @@ CREATE TABLE `logininfo` (
 --
 
 INSERT INTO `logininfo` (`employeeID`, `username`, `password`, `usertype`) VALUES
-(1, 'aaa', 'aaa', 'admin');
+(1, 'aaa', 'aaa', 'admin'),
+(2, 'bbb', 'bbb', 'user');
 
 --
 -- Indexes for dumped tables
@@ -140,13 +154,13 @@ ALTER TABLE `logininfo`
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `employeeinfo`
 --
 ALTER TABLE `employeeinfo`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `leaveapplication`
