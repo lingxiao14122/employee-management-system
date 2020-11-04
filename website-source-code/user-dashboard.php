@@ -208,9 +208,17 @@
                                         <div class="card-right float-left" id="time">
                                             12:10AM
                                         </div>-->
+                                        <?php
+                                            $statusString = checkStatus($_SESSION["id"]);
+                                            if($statusString == "Clock In"){
+                                                $address = "clockIn_process.php";
+                                            } else {
+                                                $address = "clockOut_process.php";
+                                            }
+                                        ?>
                                         <div class="card-right float-left">
-                                            <form action="clockInOut_process.php" method="POST">
-                                                <button type="submit" name="submit" class="special btn-admin-search" value="<?php echo checkStatus($_SESSION["id"]);?>"><?php echo checkStatus($_SESSION["id"]);?></button>
+                                            <form action="<?php echo $address?>" method="POST">
+                                                <button type="submit" name="submit" class="special btn-admin-search" value="<?php echo $statusString;?>"><?php echo checkStatus($_SESSION["id"]);?></button>
                                             </form>
                                             
                                         </div>
