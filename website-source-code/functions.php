@@ -11,6 +11,7 @@
             $status = "Clock In";
         } else {
             $row = $result->fetch_assoc();
+            //need add overnight OT check
             if($row["status"] == "Clock In"){
                 $status = "Clock Out";
             } else {
