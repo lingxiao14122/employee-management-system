@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 03, 2020 at 12:34 PM
+-- Generation Time: Nov 04, 2020 at 06:41 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.5
 
@@ -47,8 +47,8 @@ INSERT INTO `attendance` (`ID`, `employeeID`, `date`, `time`, `status`, `remark`
 (1, 2, '2020-11-03', '09:00:00', 'Clock In', ''),
 (2, 1, '2020-11-01', '10:00:00', 'Clock In', ''),
 (3, 2, '2020-11-03', '12:00:00', 'Clock Out', ''),
-(4, 2, '2020-11-03', '13:00:00', 'Clock In', ''),
-(5, 2, '2020-11-03', '19:06:46', 'Clock Out', '');
+(6, 2, '2020-11-04', '09:00:00', 'Clock in', ''),
+(7, 2, '2020-11-04', '12:00:00', 'Clock Out', '');
 
 -- --------------------------------------------------------
 
@@ -66,16 +66,20 @@ CREATE TABLE `employeeinfo` (
   `phone` varchar(30) DEFAULT NULL,
   `email` varchar(20) DEFAULT NULL,
   `address` varchar(20) DEFAULT NULL,
-  `payroll` int(10) DEFAULT NULL
+  `payroll` int(10) DEFAULT NULL,
+  `work_start_time` time NOT NULL,
+  `work_end_time` time NOT NULL,
+  `rest_time` varchar(20) NOT NULL,
+  `weekend_work` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `employeeinfo`
 --
 
-INSERT INTO `employeeinfo` (`ID`, `name`, `gender`, `position`, `height`, `phone`, `email`, `address`, `payroll`) VALUES
-(1, 'aaa', 'male', 'cleck', 170, '0123456789', 'aaa@isp.com', '1-2-15, Condo. A', 1500),
-(2, 'bbb', 'female', 'cleck', 170, '0123456789', 'bbb@isp.com', '1-2-15, Condo. A', 1500);
+INSERT INTO `employeeinfo` (`ID`, `name`, `gender`, `position`, `height`, `phone`, `email`, `address`, `payroll`, `work_start_time`, `work_end_time`, `rest_time`, `weekend_work`) VALUES
+(1, 'aaa', 'male', 'cleck', 170, '0123456789', 'aaa@isp.com', '1-2-15, Condo. A', 1500, '00:00:00', '00:00:00', '', 0),
+(2, 'bbb', 'female', 'cleck', 170, '0123456789', 'bbb@isp.com', '1-2-15, Condo. A', 1500, '09:00:00', '18:00:00', '+1 Hour', 1);
 
 -- --------------------------------------------------------
 
@@ -154,7 +158,7 @@ ALTER TABLE `logininfo`
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `employeeinfo`
