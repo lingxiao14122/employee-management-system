@@ -44,7 +44,7 @@
                     class="form-control"
                     placeholder="Username"
                     name="username"
-                  />
+                  required/>
                 </div>
                 <div class="mb-3 mb-md-4 col-md-12">
                   <input
@@ -52,6 +52,7 @@
                     class="form-control"
                     placeholder="Password"
                     name="password"
+                    required
                   />
                 </div>
 
@@ -61,6 +62,7 @@
                     name="submit"
                     value="login now"
                     class="btn btn-primary btn-block py-3"
+                    required
                   />
                 </div>
               </div>

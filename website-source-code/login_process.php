@@ -17,6 +17,7 @@
             $query = 'SELECT * FROM `employeeinfo` WHERE `ID` = "'.$row["employeeID"].'"';
             $result = $con->query($query);
             $rows = $result->fetch_assoc();
+            $_SESSION["id"] = $rows["ID"];
             $_SESSION["name"] = $rows["name"];
             echo "<script type='text/javascript'>alert('Login Successful, ".$_SESSION["name"]."');window.location='admin-dashboard.php';</script>";
         } else {

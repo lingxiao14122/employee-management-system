@@ -6,8 +6,7 @@
         <li><a href="#">Leave request</a></li>
         <li><a href="#">Employee report</a></li>
         <li><a href="#">Manage user</a></li>
-        <li><a href="#">//</a></li>
-        <li><a href="#">//</a></li>
-        <li><a href="#">//</a></li>
+        <li><a href="admin-attendance.php">Clock In Out</a></li>
+        
     </ul>
 </section>

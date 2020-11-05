@@ -150,7 +150,7 @@
     <!-- Main -->
     <section id="main" class="wrapper style1">
         <header class="major">
-            <h2>Hi, <?php echo $_SESSION["name"]; ?> Admin</h2>
+            <h2>Hi, <?php echo $_SESSION["name"]; ?><?php echo $_SESSION["id"];?> Admin</h2>
             <p>Welcome to dashboard, you may browse at navigation</p>
         </header>
         <div class="container">

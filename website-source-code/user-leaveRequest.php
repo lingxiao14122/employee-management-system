@@ -163,7 +163,7 @@
 
 
                             <div class="page-div-main">
-                                <form action="admin-searchEmpDetailprocess.php" method="POST" class="leave-form">
+                                <form action=".php" method="POST" class="leave-form">
 
                                     <label class="leave-label">Employee Name:</label>
                                     <input class="leave-input" name="reason">
