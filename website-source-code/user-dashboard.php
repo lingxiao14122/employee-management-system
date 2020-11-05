@@ -242,7 +242,7 @@
                                         <?php
                                             require('dbcon.php');
 
-                                            $query = 'SELECT * FROM `attendance` WHERE `employeeID` = "'.$_SESSION["id"].'" ORDER BY `attendance`.`time` DESC';
+                                            $query = 'SELECT * FROM `attendance` WHERE `employeeID` = "'.$_SESSION["id"].'" ORDER BY `attendance`.`date` DESC, `attendance`.`time` DESC';
                                             $result = $con->query($query);
 
                                             if($result->num_rows == 0){

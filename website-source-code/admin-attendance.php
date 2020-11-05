@@ -174,7 +174,7 @@
                 <div class="row-admin-dashboard">
                     <div class="navigation-admin-dashboard">
 
-                        <?php include("user-navigation.php") ?>
+                        <?php include("admin-navigation.php") ?>
                     </div>
 
                     <div class="8u skel-cell-important">
@@ -242,7 +242,7 @@
                                         <?php
                                             require('dbcon.php');
 
-                                            $query = 'SELECT * FROM `attendance` WHERE `employeeID` = "'.$_SESSION["id"].'" ORDER BY `attendance`.`time` DESC';
+                                            $query = 'SELECT * FROM `attendance` WHERE `employeeID` = "'.$_SESSION["id"].'" ORDER BY `attendance`.`date` DESC, `attendance`.`time` DESC';
                                             $result = $con->query($query);
 
                                             if($result->num_rows == 0){
