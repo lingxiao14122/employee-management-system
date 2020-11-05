@@ -19,7 +19,7 @@
             //check employee if first clock in current day
             $query = 'SELECT * FROM `attendance` WHERE `employeeID`=\''.$_SESSION["id"].'\' AND `date`=\''.Date("Y-m-d").'\' ORDER BY `time` DESC';
             $result = $con->query($query);
-            if(!$result){
+            if(!$result || $result->num_rows == 0){
                 //check employee if got late clock in (apply late 10min)
                 $diffTime = diffTime($employeeInfoRow["work_start_time"], $currentTime);
                 if($diffTime > 10){ //apply late 10min
@@ -87,7 +87,7 @@
             //check employee if first clock in current day
             $query = 'SELECT * FROM `attendance` WHERE `employeeID`=\''.$_SESSION["id"].'\' AND `date`=\''.Date("Y-m-d").'\' ORDER BY `time` DESC';
             $result = $con->query($query);
-            if(!$result){
+            if(!$result || $result->num_rows == 0){
                 //check employee got OT on weekend or not
                 if(Date("N") == 6 || Date("N") == 7){
                     insertQuery($_SESSION["id"], $_SESSION["name"], "Clock In" , "OT (Weekend)", $diffTime);

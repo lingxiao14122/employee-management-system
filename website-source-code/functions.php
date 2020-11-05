@@ -6,16 +6,19 @@
         $query = 'SELECT * FROM `attendance` WHERE `employeeID` = "'.$id.'" AND `date` = "'.date("Y-m-d").'" ORDER BY `attendance`.`time` DESC';
         $result = $con->query($query);
         
-
-        if($result->num_rows == 0){
+        if(!$result || $result->num_rows == 0){
             $status = "Clock In";
         } else {
             $row = $result->fetch_assoc();
-            //need add overnight OT check
-            if($row["status"] == "Clock In"){
+            $overnightDuration = diffTime($attendanceRow["time"], "07:00:00");
+            if($attendanceRow["date"] == Date("Y-m-d") && $overnightDuration >= 0 && $attendanceRow["status"] == "Clock Out"){
                 $status = "Clock Out";
             } else {
-                $status = "Clock In";
+                if($row["status"] == "Clock In"){
+                    $status = "Clock Out";
+                } else {
+                    $status = "Clock In";
+                }
             }
         }
 
