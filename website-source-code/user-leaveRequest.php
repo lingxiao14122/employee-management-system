@@ -217,17 +217,16 @@
                                     <label class="leave-label">Reason for Absence:</label>
                                     <div class="custom-select" style="width:200px;">
                                         <select class="select-custom">
-                                            <option value="0">Select reason:</option>
-                                            <option value="1">Sick leave</option>
-                                            <option value="2">Bereavement leave</option>
-                                            <option value="3">Bereavement leave</option>
-                                            <option value="4">Personal Leave</option>
-                                            <option value="5">Judy duty or legal leave</option>
-                                            <option value="6">Emergency Leave</option>
-                                            <option value="7">Temporary Leave</option>
-                                            <option value="8">Leave Without Pay</option>
-
-
+                                            <option disabled>Select reason:</option>
+                                            <option value="sick">Sick leave</option>
+                                            <option value="bereavementFamily">Bereavement leave (Immediate Family)</option>
+                                            <option value="bereavementOthers">Bereavement leave (Others)</option>
+                                            <option value="personal">Personal Leave</option>
+                                            <option value="judylegal">Judy duty or legal leave</option>
+                                            <option value="emergency">Emergency Leave</option>
+                                            <option value="temporary">Temporary Leave</option>
+                                            <option value="withoutpay">Leave Without Pay</option>
+                                            <option value="others">Others: </option>
                                         </select>
                                     </div>
 
