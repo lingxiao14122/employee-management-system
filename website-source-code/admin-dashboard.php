@@ -44,6 +44,12 @@
             color: black;
         }
 
+        .leaverequest{
+            background-color: rgb(255, 170, 170);
+            border-radius: 5px;
+            color: red;
+        }
+
         .attendance {
             border: black;
             border-style: solid;
