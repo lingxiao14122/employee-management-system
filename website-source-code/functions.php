@@ -45,7 +45,7 @@
             VALUES (\'\', \''.$id.'\',\''.date("Y-m-d").'\',\''.date("H:i:s").'\',
             \''.$status.'\',\''.$remark.'\')';
 
-        //$result1 = $con->query($query1);
+        $result1 = $con->query($query1);
 
         if($status == "Clock In"){
             if($diffTime == NULL){
