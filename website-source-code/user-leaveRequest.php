@@ -1,7 +1,7 @@
 <?php
-    if (isset($_COOKIE["PHPSESSID"])){
-        session_start();
-    }
+if (isset($_COOKIE["PHPSESSID"])) {
+    session_start();
+}
 ?>
 
 <!DOCTYPE html>
@@ -27,6 +27,15 @@
         <link rel="stylesheet" href="css/style.css" />
         <link rel="stylesheet" href="css/style-xlarge.css" />
     </noscript>
+    <script type="text/javascript">
+        function CheckReason(val) {
+            var element = document.getElementById('reason');
+            if (val == 'others')
+                element.style.display = 'block';
+            else
+                element.style.display = 'none';
+        }
+    </script>
 
     <!--CSS CSS CSS CSS CSS CSS CSS CSS CSS CSS CSS -->
     <style>
@@ -137,6 +146,7 @@
         .leave-label-fromto {
             display: inline-block;
             margin-right: 35px;
+            margin-right: 33%;
         }
 
         .leave-form {
@@ -157,12 +167,9 @@
             width: 54em;
         }
 
-        .from {
-
-        }
-
-        .to {
-
+        .leave-input-reason {
+            width: 42%;
+            margin-top: 16px;
         }
     </style>
 </head>
@@ -174,7 +181,7 @@
     <!-- Main -->
     <section id="main" class="wrapper style1">
         <header class="major">
-            <h2>Hi, <?php echo $_SESSION["name"];?> user</h2>
+            <h2>Hi, <?php echo $_SESSION["name"]; ?> user</h2>
             <p>Welcome to dashboard, you may browse at navigation</p>
         </header>
         <div class="container">
@@ -194,20 +201,21 @@
                                 <form action=".php" method="POST" class="leave-form">
 
                                     <label class="leave-label">Employee ID:</label>
-                                    <input class="leave-input" name="id" value="<?php echo $_SESSION["id"]?>" disabled>
+                                    <input class="leave-input" name="id" value="<?php echo $_SESSION["id"] ?>" disabled>
 
                                     <label class="leave-label">Employee Name:</label>
-                                    <input class="leave-input" name="name" value="<?php echo $_SESSION["name"]?>" disabled>
+                                    <input class="leave-input" name="name" value="<?php echo $_SESSION["name"] ?>" disabled>
 
                                     <label class="leave-label">Employee Number:</label>
                                     <input class="leave-input" name="reason">
 
                                     <div class="fromto-container">
-                                        <div class="from">
+                                        <div>
                                             <label class="leave-label leave-label-fromto">From:</label>
-                                            <input class="leave-input leave-input-fromto" name="reason">
+                                            <label class="leave-label leave-label-fromto">To:</label>
                                         </div>
-                                        <div class="to"><label class="leave-label leave-label-fromto">To:</label>
+                                        <div>
+                                            <input class="leave-input leave-input-fromto" name="reason">
                                             <input class="leave-input leave-input-fromto" name="reason">
                                         </div>
                                     </div>
@@ -215,8 +223,8 @@
 
 
                                     <label class="leave-label">Reason for Absence:</label>
-                                    <div class="custom-select" style="width:200px;">
-                                        <select class="select-custom">
+                                    <div class="custom-select" style="width:42%;" >
+                                        <select class="select-custom" onchange='CheckReason(this.value);'>
                                             <option disabled>Select reason:</option>
                                             <option value="sick">Sick leave</option>
                                             <option value="bereavementFamily">Bereavement leave (Immediate Family)</option>
@@ -228,7 +236,9 @@
                                             <option value="withoutpay">Leave Without Pay</option>
                                             <option value="others">Others: </option>
                                         </select>
+
                                     </div>
+                                    <input class="leave-input leave-input-reason" name="reasonleave" id="reason" style='display:none;'>
 
                                     <label class="leave-label">Remarks:</label>
                                     <input class="leave-input" name="remark">
