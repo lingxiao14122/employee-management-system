@@ -1,3 +1,9 @@
+<?php
+    if (isset($_COOKIE["PHPSESSID"])){
+        session_start();
+    }
+?>
+
 <!DOCTYPE html>
 <!--
 	Ion by TEMPLATED
@@ -168,7 +174,7 @@
     <!-- Main -->
     <section id="main" class="wrapper style1">
         <header class="major">
-            <h2>Hi, user</h2>
+            <h2>Hi, <?php echo $_SESSION["name"];?> user</h2>
             <p>Welcome to dashboard, you may browse at navigation</p>
         </header>
         <div class="container">
@@ -187,8 +193,11 @@
                             <div class="page-div-main">
                                 <form action=".php" method="POST" class="leave-form">
 
+                                    <label class="leave-label">Employee ID:</label>
+                                    <input class="leave-input" name="id" value="<?php echo $_SESSION["id"]?>" disabled>
+
                                     <label class="leave-label">Employee Name:</label>
-                                    <input class="leave-input" name="reason">
+                                    <input class="leave-input" name="name" value="<?php echo $_SESSION["name"]?>" disabled>
 
                                     <label class="leave-label">Employee Number:</label>
                                     <input class="leave-input" name="reason">
@@ -223,7 +232,7 @@
                                     </div>
 
                                     <label class="leave-label">Remarks:</label>
-                                    <input class="leave-input" name="reason">
+                                    <input class="leave-input" name="remark">
 
                                     <button type="submit" name="submit" class="special btn-admin-search" value="submit">Submit Leave Request</button>
                                 </form>

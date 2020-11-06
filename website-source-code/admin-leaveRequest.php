@@ -87,8 +87,10 @@ if (isset($_COOKIE["PHPSESSID"])) {
                                     <thead>
                                         <tr>
                                             <th class="tg-0pky">No.</th>
-                                            <th class="tg-0lax">Name</th>
-                                            <th class="tg-0lax">Date</th>
+                                            <th class="tg-0lax">Employee ID</th>
+                                            <th class="tg-0lax">Employee Name</th>
+                                            <th class="tg-0lax">Date Start</th>
+                                            <th class="tg-0lax">Date End</th>
                                             <th class="tg-0lax">Reason</th>
                                             <th class="tg-0lax">Status</th>
                                             <th class="tg-0laa">Remarks</th>
@@ -96,30 +98,48 @@ if (isset($_COOKIE["PHPSESSID"])) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="tg-0lax">1</td>
-                                            <td class="tg-0lax">bbb</td>
-                                            <td class="tg-0lax">2020-11-06</td>
-                                            <td class="tg-0lax">Fever</td>
-                                            <td class="tg-0lax">Pending!</td>
-                                            <td class="tg-0lax">i will leave two day i will leave two day i will leave two day i will leave two day i will leave two day i will leave two day i will leave two day </td>
 
-                                            <td class="tg-0lax">
-                                                <ul class="alt navigation-admin">
+                                    <?php
+                                        require_once("dbcon.php");
 
-                                                    <li><a href="#">Accept</a></li>
+                                        $query = "SELECT `leaveapplication`.`ID`, `leaveapplication`.`employeeID`, `employeeinfo`.`name`, `leaveapplication`.`reason`, `leaveapplication`.`dateRequest_start`, `leaveapplication`.`dateRequest_end`, `leaveapplication`.`approval`, `leaveapplication`.`remark` FROM `leaveapplication`
+                                                  INNER JOIN `employeeinfo` ON `leaveapplication`.`employeeID` = `employeeinfo`.`ID`";
+                                        $result = $con->query($query);
+
+                                        while($row = $result->fetch_assoc()){
+                                            echo "<tr>
+                                            <td class=\"tg-0lax\">".$row["ID"]."</td>
+                                            <td class=\"tg-0lax\">".$row["employeeID"]."</td>
+                                            <td class=\"tg-0lax\">".$row["name"]."</td>
+                                            <td class=\"tg-0lax\">".$row["dateRequest_start"]."</td>
+                                            <td class=\"tg-0lax\">".$row["dateRequest_end"]."</td>
+                                            <td class=\"tg-0lax\">".$row["reason"]."</td>";
+
+                                            if($row["approval"] == NULL || $row["approval"] == ""){
+                                                echo "<td class=\"tg-0lax\">Pending</td>";
+                                            } else {
+                                                echo "<td class=\"tg-0lax\">".$row["approval"]."</td>";
+                                            }
+
+                                            echo "<td class=\"tg-0lax\">".$row["remark"]."</td>
+                                            <td class=\"tg-0lax\">
+                                                <ul class=\"alt navigation-admin\">
+
+                                                    <li><a href=\"admin-leaveRequestProcess.php?id=".$row["ID"]."&approval=Accept\">Accept</a></li>
 
                                                 </ul>
                                             </td>
-                                            <td class="tg-0lax">
-                                                <ul class="alt navigation-admin">
+                                            <td class=\"tg-0lax\">
+                                                <ul class=\"alt navigation-admin\">
 
-                                                    <li><a href="#">Reject</a></li>
+                                                    <li><a href=\"admin-leaveRequestProcess.php?id=".$row["ID"]."&approval=Reject\">Reject</a></li>
 
                                                 </ul>
                                             </td>
+                                            </tr>";
+                                        }
 
-                                        </tr>
+                                    ?>
                                     </tbody>
                                 </table>
                             </div>

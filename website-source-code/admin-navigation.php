@@ -1,13 +1,40 @@
+<style>
+.leaverequest{
+    background-color: rgb(255, 170, 170);
+    border-radius: 5px;
+    color: red;
+}
+</style>
+
 <section>
     <h2>Navigation</h2>
     <ul class="alt navigation-admin">
         <li><a href="admin-dashboard.php">Dashboard</a></li>
         <li><a href="admin-searchEmpDetail.php">Search employee detail</a></li>
-        <li><a href="admin-leaveRequest.php" class="leaverequest" >Leave request ( 
 
-                <!-- <?php echo $NUMBER_OF_PENDING_REQUEST; ?> -->
+        <?php
+            require("dbcon.php");
+            $count = 0;
 
-        ) </a></li>
+            $query = "SELECT * FROM `leaveapplication`";
+            $result = $con->query($query);
+            
+            if(!$result || $result->num_rows == 0){
+                echo "<li><a href=\"admin-leaveRequest.php\">Leave request</a></li>";
+            } else {
+                while($row = $result->fetch_assoc()){
+                    if($row["approval"] == NULL || $row["approval"] == ""){
+                        $count = $count + 1;
+                    }
+                }
+                
+                if($count == 0){
+                    echo "<li><a href=\"admin-leaveRequest.php\">Leave Request</a></li>";
+                } else {
+                    echo "<li><a href=\"admin-leaveRequest.php\" class=\"leaverequest\">Leave Request ($count)</a></li>";
+                }
+            }
+        ?>
         <li><a href="#">Employee report</a></li>
         <li><a href="#">Manage user</a></li>
         <li><a href="admin-attendance.php">Clock In Out</a></li>
