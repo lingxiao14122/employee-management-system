@@ -144,6 +144,7 @@
             font-weight: 500;
             background-color: white;
             border: solid 2px black;
+            width: auto;
         }
 
         .fromto-container {
@@ -155,7 +156,7 @@
         }
 
         .to {
-            
+
         }
     </style>
 </head>
