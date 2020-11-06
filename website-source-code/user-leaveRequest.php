@@ -87,7 +87,7 @@
         }
 
         /* RIGHT SIDE CUSTOM CSS RIGHT SIDE CUSTOM CSS */
-        
+
 
         .card-info-right {
             margin: 49px 0px;
@@ -101,6 +101,7 @@
         .page-div-main {
             border-width: 4px;
             height: 53em;
+            width: 54em;
         }
 
         button:active {
@@ -129,12 +130,32 @@
 
         .leave-label-fromto {
             display: inline-block;
-            margin-right: 24px;
+            margin-right: 35px;
         }
 
         .leave-form {
             margin: 0 0 2em 0;
             padding: 0px 13px 0px 0px;
+        }
+
+        .select-custom {
+            font-size: 18px;
+            color: black;
+            font-weight: 500;
+            background-color: white;
+            border: solid 2px black;
+        }
+
+        .fromto-container {
+            width: 54em;
+        }
+
+        .from {
+
+        }
+
+        .to {
+            
         }
     </style>
 </head>
@@ -171,14 +192,34 @@
                                     <label class="leave-label">Employee Number:</label>
                                     <input class="leave-input" name="reason">
 
-                                    <label class="leave-label leave-label-fromto">From:</label>
-                                    <input class="leave-input leave-input-fromto" name="reason">
+                                    <div class="fromto-container">
+                                        <div class="from">
+                                            <label class="leave-label leave-label-fromto">From:</label>
+                                            <input class="leave-input leave-input-fromto" name="reason">
+                                        </div>
+                                        <div class="to"><label class="leave-label leave-label-fromto">To:</label>
+                                            <input class="leave-input leave-input-fromto" name="reason">
+                                        </div>
+                                    </div>
 
-                                    <label class="leave-label leave-label-fromto">To:</label>
-                                    <input class="leave-input leave-input-fromto" name="reason">
+
 
                                     <label class="leave-label">Reason for Absence:</label>
-                                    <input class="leave-input" name="reason">
+                                    <div class="custom-select" style="width:200px;">
+                                        <select class="select-custom">
+                                            <option value="0">Select reason:</option>
+                                            <option value="1">Sick leave</option>
+                                            <option value="2">Bereavement leave</option>
+                                            <option value="3">Bereavement leave</option>
+                                            <option value="4">Personal Leave</option>
+                                            <option value="5">Judy duty or legal leave</option>
+                                            <option value="6">Emergency Leave</option>
+                                            <option value="7">Temporary Leave</option>
+                                            <option value="8">Leave Without Pay</option>
+
+
+                                        </select>
+                                    </div>
 
                                     <label class="leave-label">Remarks:</label>
                                     <input class="leave-input" name="reason">
