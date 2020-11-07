@@ -56,7 +56,7 @@ if (isset($_COOKIE["PHPSESSID"])) {
         }
 
         .tg-00ax {
-            width: 19%;
+            width: 21%;
         }
 
 
