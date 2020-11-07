@@ -103,7 +103,8 @@ if (isset($_COOKIE["PHPSESSID"])) {
                                         require_once("dbcon.php");
 
                                         $query = "SELECT `leaveapplication`.`ID`, `leaveapplication`.`employeeID`, `employeeinfo`.`name`, `leaveapplication`.`reason`, `leaveapplication`.`dateRequest_start`, `leaveapplication`.`dateRequest_end`, `leaveapplication`.`approval`, `leaveapplication`.`remark` FROM `leaveapplication`
-                                                  INNER JOIN `employeeinfo` ON `leaveapplication`.`employeeID` = `employeeinfo`.`ID`";
+                                        INNER JOIN `employeeinfo` ON `leaveapplication`.`employeeID` = `employeeinfo`.`ID`
+                                        ORDER BY CASE WHEN `approval` LIKE 'Pending' then 0 else 1 end, `approval` ASC";
                                         $result = $con->query($query);
 
                                         while($row = $result->fetch_assoc()){

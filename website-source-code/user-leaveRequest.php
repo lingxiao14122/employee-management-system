@@ -30,7 +30,7 @@ if (isset($_COOKIE["PHPSESSID"])) {
     <script type="text/javascript">
         function CheckReason(val) {
             var element = document.getElementById('reason');
-            if (val == 'others')
+            if (val == 'Others')
                 element.style.display = 'block';
             else
                 element.style.display = 'none';
@@ -198,16 +198,15 @@ if (isset($_COOKIE["PHPSESSID"])) {
 
 
                             <div class="page-div-main">
-                                <form action=".php" method="POST" class="leave-form">
+                                <form action="user-leaveRequest-process.php" method="POST" class="leave-form">
 
                                     <label class="leave-label">Employee ID:</label>
                                     <input class="leave-input" name="id" value="<?php echo $_SESSION["id"] ?>" disabled>
+                                    <input class="leave-input" name="id" value="<?php echo $_SESSION["id"] ?>" hidden>
 
                                     <label class="leave-label">Employee Name:</label>
                                     <input class="leave-input" name="name" value="<?php echo $_SESSION["name"] ?>" disabled>
-
-                                    <label class="leave-label">Employee Number:</label>
-                                    <input class="leave-input" name="reason">
+                                    <input class="leave-input" name="name" value="<?php echo $_SESSION["name"] ?>" hidden>
 
                                     <div class="fromto-container">
                                         <div>
@@ -215,8 +214,8 @@ if (isset($_COOKIE["PHPSESSID"])) {
                                             <label class="leave-label leave-label-fromto">To:</label>
                                         </div>
                                         <div>
-                                            <input class="leave-input leave-input-fromto" name="reason">
-                                            <input class="leave-input leave-input-fromto" name="reason">
+                                            <input class="leave-input leave-input-fromto" type="date" name="dateStart">
+                                            <input class="leave-input leave-input-fromto" type="date" name="dateEnd">
                                         </div>
                                     </div>
 
@@ -224,21 +223,21 @@ if (isset($_COOKIE["PHPSESSID"])) {
 
                                     <label class="leave-label">Reason for Absence:</label>
                                     <div class="custom-select" style="width:42%;" >
-                                        <select class="select-custom" onchange='CheckReason(this.value);'>
+                                        <select class="select-custom" onchange='CheckReason(this.value);' name="reason">
                                             <option disabled>Select reason:</option>
-                                            <option value="sick">Sick leave</option>
-                                            <option value="bereavementFamily">Bereavement leave (Immediate Family)</option>
-                                            <option value="bereavementOthers">Bereavement leave (Others)</option>
-                                            <option value="personal">Personal Leave</option>
-                                            <option value="judylegal">Judy duty or legal leave</option>
-                                            <option value="emergency">Emergency Leave</option>
-                                            <option value="temporary">Temporary Leave</option>
-                                            <option value="withoutpay">Leave Without Pay</option>
-                                            <option value="others">Others: </option>
+                                            <option value="Sick leave">Sick leave</option>
+                                            <option value="Bereavement leave (Immediate Family)">Bereavement leave (Immediate Family)</option>
+                                            <option value="Bereavement leave (Others)">Bereavement leave (Others)</option>
+                                            <option value="Personal Leave">Personal Leave</option>
+                                            <option value="Judy duty or legal leave">Judy duty or legal leave</option>
+                                            <option value="Emergency Leave">Emergency Leave</option>
+                                            <option value="Temporary Leave">Temporary Leave</option>
+                                            <option value="Leave Without Pay">Leave Without Pay</option>
+                                            <option value="Others">Others: </option>
                                         </select>
 
                                     </div>
-                                    <input class="leave-input leave-input-reason" name="reasonleave" id="reason" style='display:none;'>
+                                    <input class="leave-input leave-input-reason" name="others" id="reason" style='display:none;'>
 
                                     <label class="leave-label">Remarks:</label>
                                     <input class="leave-input" name="remark">

@@ -23,7 +23,7 @@
                 echo "<li><a href=\"admin-leaveRequest.php\">Leave request</a></li>";
             } else {
                 while($row = $result->fetch_assoc()){
-                    if($row["approval"] == NULL || $row["approval"] == ""){
+                    if($row["approval"] == NULL || $row["approval"] == "" || $row["approval"] == "Pending"){
                         $count = $count + 1;
                     }
                 }
@@ -37,7 +37,7 @@
         ?>
         <li><a href="#">Employee report</a></li>
         <li><a href="#">Manage user</a></li>
-        <li><a href="admin-attendance.php">Clock In Out</a></li>
+        <li><a href="admin-attendance.php">Clock In / Out</a></li>
 
     </ul>
 </section>
