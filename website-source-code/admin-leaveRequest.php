@@ -52,9 +52,14 @@ if (isset($_COOKIE["PHPSESSID"])) {
         }
 
         .tg-0laa {
-            width: 300px;
-
+            width: 19%;
         }
+
+        .tg-00ax {
+            width: 19%;
+        }
+
+
     </style>
 </head>
 
@@ -91,7 +96,7 @@ if (isset($_COOKIE["PHPSESSID"])) {
                                             <th class="tg-0lax">Employee Name</th>
                                             <th class="tg-0lax">Date Start</th>
                                             <th class="tg-0lax">Date End</th>
-                                            <th class="tg-0lax">Reason</th>
+                                            <th class="tg-00ax">Reason</th>
                                             <th class="tg-0lax">Status</th>
                                             <th class="tg-0laa">Remarks</th>
                                             <th class="tg-0lax">Action</th>
@@ -114,7 +119,7 @@ if (isset($_COOKIE["PHPSESSID"])) {
                                             <td class=\"tg-0lax\">".$row["name"]."</td>
                                             <td class=\"tg-0lax\">".$row["dateRequest_start"]."</td>
                                             <td class=\"tg-0lax\">".$row["dateRequest_end"]."</td>
-                                            <td class=\"tg-0lax\">".$row["reason"]."</td>";
+                                            <td class=\"tg-00ax\">".$row["reason"]."</td>";
 
                                             if($row["approval"] == NULL || $row["approval"] == ""){
                                                 echo "<td class=\"tg-0lax\">Pending</td>";
