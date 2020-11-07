@@ -113,7 +113,7 @@ if (isset($_COOKIE["PHPSESSID"])) {
                                         $result = $con->query($query);
 
                                         if(!$result || $result->num_rows == 0){
-                                            echo "<tr><td colspan='9'>No record</td></tr>";
+                                            echo "<tr><td colspan='9' align='center'>No record</td></tr>";
                                         } else {
                                             while($row = $result->fetch_assoc()){
                                                 echo "<tr>
