@@ -13,9 +13,9 @@
 
           <?php
           if(!isset($_COOKIE["PHPSESSID"])){
-            echo "<li><a href=\"login.php\" class=\"button special\">Login In</a></li>";
+            echo "<li><a href=\"login.php\" class=\"button special\">Log In</a></li>";
           } else {
-            echo "<li><a href=\"logout_process.php\" class=\"button special\">Login Out</a></li>";
+            echo "<li><a href=\"logout_process.php\" class=\"button special\">Log Out</a></li>";
           }
           ?>
         </ul>
