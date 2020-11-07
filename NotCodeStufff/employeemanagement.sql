@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 04, 2020 at 06:41 PM
+-- Generation Time: Nov 07, 2020 at 03:34 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.5
 
@@ -92,10 +92,20 @@ CREATE TABLE `leaveapplication` (
   `ID` int(10) NOT NULL,
   `employeeID` int(10) NOT NULL,
   `reason` varchar(20) NOT NULL,
-  `dateRequest` date NOT NULL,
-  `approval` tinyint(1) NOT NULL,
+  `dateRequest_start` date NOT NULL,
+  `dateRequest_end` date NOT NULL,
+  `approval` varchar(10) NOT NULL,
   `remark` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `leaveapplication`
+--
+
+INSERT INTO `leaveapplication` (`ID`, `employeeID`, `reason`, `dateRequest_start`, `dateRequest_end`, `approval`, `remark`) VALUES
+(1, 2, 'sick', '2020-11-09', '2020-11-09', 'Reject', ''),
+(2, 2, 'Sick leave', '2020-11-11', '2020-11-11', 'Accept', 'sick'),
+(3, 2, 'Bereavement leave (I', '2020-12-12', '2020-12-12', 'Pending', '');
 
 -- --------------------------------------------------------
 
@@ -170,7 +180,7 @@ ALTER TABLE `employeeinfo`
 -- AUTO_INCREMENT for table `leaveapplication`
 --
 ALTER TABLE `leaveapplication`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
