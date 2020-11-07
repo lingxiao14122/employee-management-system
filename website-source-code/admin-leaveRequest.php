@@ -112,39 +112,42 @@ if (isset($_COOKIE["PHPSESSID"])) {
                                         ORDER BY CASE WHEN `approval` LIKE 'Pending' then 0 else 1 end, `approval` ASC";
                                         $result = $con->query($query);
 
-                                        while($row = $result->fetch_assoc()){
-                                            echo "<tr>
-                                            <td class=\"tg-0lax\">".$row["ID"]."</td>
-                                            <td class=\"tg-0lax\">".$row["employeeID"]."</td>
-                                            <td class=\"tg-0lax\">".$row["name"]."</td>
-                                            <td class=\"tg-0lax\">".$row["dateRequest_start"]."</td>
-                                            <td class=\"tg-0lax\">".$row["dateRequest_end"]."</td>
-                                            <td class=\"tg-00ax\">".$row["reason"]."</td>";
-
-                                            if($row["approval"] == NULL || $row["approval"] == ""){
-                                                echo "<td class=\"tg-0lax\">Pending</td>";
-                                            } else {
-                                                echo "<td class=\"tg-0lax\">".$row["approval"]."</td>";
+                                        if(!$result || $result->num_rows == 0){
+                                            echo "<tr><td colspan='9'>No record</td></tr>";
+                                        } else {
+                                            while($row = $result->fetch_assoc()){
+                                                echo "<tr>
+                                                <td class=\"tg-0lax\">".$row["ID"]."</td>
+                                                <td class=\"tg-0lax\">".$row["employeeID"]."</td>
+                                                <td class=\"tg-0lax\">".$row["name"]."</td>
+                                                <td class=\"tg-0lax\">".$row["dateRequest_start"]."</td>
+                                                <td class=\"tg-0lax\">".$row["dateRequest_end"]."</td>
+                                                <td class=\"tg-00ax\">".$row["reason"]."</td>";
+    
+                                                if($row["approval"] == NULL || $row["approval"] == ""){
+                                                    echo "<td class=\"tg-0lax\">Pending</td>";
+                                                } else {
+                                                    echo "<td class=\"tg-0lax\">".$row["approval"]."</td>";
+                                                }
+    
+                                                echo "<td class=\"tg-0lax\">".$row["remark"]."</td>
+                                                <td class=\"tg-0lax\">
+                                                    <ul class=\"alt navigation-admin\">
+    
+                                                        <li><a href=\"admin-leaveRequestProcess.php?id=".$row["ID"]."&approval=Accept\">Accept</a></li>
+    
+                                                    </ul>
+                                                </td>
+                                                <td class=\"tg-0lax\">
+                                                    <ul class=\"alt navigation-admin\">
+    
+                                                        <li><a href=\"admin-leaveRequestProcess.php?id=".$row["ID"]."&approval=Reject\">Reject</a></li>
+    
+                                                    </ul>
+                                                </td>
+                                                </tr>";
                                             }
-
-                                            echo "<td class=\"tg-0lax\">".$row["remark"]."</td>
-                                            <td class=\"tg-0lax\">
-                                                <ul class=\"alt navigation-admin\">
-
-                                                    <li><a href=\"admin-leaveRequestProcess.php?id=".$row["ID"]."&approval=Accept\">Accept</a></li>
-
-                                                </ul>
-                                            </td>
-                                            <td class=\"tg-0lax\">
-                                                <ul class=\"alt navigation-admin\">
-
-                                                    <li><a href=\"admin-leaveRequestProcess.php?id=".$row["ID"]."&approval=Reject\">Reject</a></li>
-
-                                                </ul>
-                                            </td>
-                                            </tr>";
                                         }
-
                                     ?>
                                     </tbody>
                                 </table>
