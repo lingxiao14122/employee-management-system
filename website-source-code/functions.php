@@ -9,12 +9,12 @@
         if(!$result || $result->num_rows == 0){
             $status = "Clock In";
         } else {
-            $row = $result->fetch_assoc();
+            $attendanceRow = $result->fetch_assoc();
             $overnightDuration = diffTime($attendanceRow["time"], "07:00:00");
             if($attendanceRow["date"] == Date("Y-m-d") && $overnightDuration >= 0 && $attendanceRow["status"] == "Clock Out"){
                 $status = "Clock Out";
             } else {
-                if($row["status"] == "Clock In"){
+                if($attendanceRow["status"] == "Clock In"){
                     $status = "Clock Out";
                 } else {
                     $status = "Clock In";
