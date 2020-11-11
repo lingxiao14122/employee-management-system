@@ -13,4 +13,20 @@
     echo Date("H:i:s", $add);
 
     echo -(-1);
+
+    echo "<br>";
+
+    require_once("dbcon.php");
+
+    $result = $con->query("SELECT * FROM `logininfo`");
+
+    $table = $result->fetch_all();
+
+    var_dump($table);
+
+    echo "<br>";
+    echo $table[1][3];
+
+    echo "<br>";
+    echo sizeof($table);
 ?>

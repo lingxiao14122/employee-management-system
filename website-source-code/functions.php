@@ -10,15 +10,10 @@
             $status = "Clock In";
         } else {
             $attendanceRow = $result->fetch_assoc();
-            $overnightDuration = diffTime($attendanceRow["time"], "07:00:00");
-            if($attendanceRow["date"] == Date("Y-m-d") && $overnightDuration >= 0 && $attendanceRow["status"] == "Clock Out"){
+            if($attendanceRow["status"] == "Clock In"){
                 $status = "Clock Out";
             } else {
-                if($attendanceRow["status"] == "Clock In"){
-                    $status = "Clock Out";
-                } else {
-                    $status = "Clock In";
-                }
+                $status = "Clock In";
             }
         }
 
@@ -45,10 +40,10 @@
             VALUES (\'\', \''.$id.'\',\''.date("Y-m-d").'\',\''.date("H:i:s").'\',
             \''.$status.'\',\''.$remark.'\')';
 
-        $result = $con->query($query);
+        //$result = $con->query($query);
 
         if($status == "Clock In"){
-            if($diffTime == NULL){
+            if($diffTime == NULL || $diffTime == 0){
                 echo "<script type='text/javascript'>alert('Clock in successful. Hi ".$name."');window.location='user-dashboard.php';</script>";
             } else {
                 if($diffTime > 10){
@@ -58,7 +53,7 @@
                 }
             }
         } else {
-            if($diffTime == NULL){
+            if($diffTime == NULL || $diffTime == 0){
                 echo "<script type='text/javascript'>alert('Check out successful. Good bye');window.location='user-dashboard.php';</script>";
             } else {
                 if($diffTime > 60){
@@ -67,8 +62,6 @@
                     echo "<script type='text/javascript'>alert('Check out successful. Good bye');window.location='user-dashboard.php';</script>";
                 }
             }
-
-            
         }
     }
 ?>

@@ -1,176 +1,252 @@
 <?php
-    session_start();
-    include_once("dbcon.php");
-    include_once("functions.php");
+    if (isset($_COOKIE["PHPSESSID"])){
+        session_start();
+    } else {
+        echo "<script type='text/javascript'>alert('Error: Haven't Login. Please Login to process.');window.location='login.php';</script>";
+    }
+
+    require_once("dbcom.php");
+    require_once("functions.php");
 
     $currentTime = Date("H:i:s");
-    $rowPerDay = 4;
 
     $query = 'SELECT * FROM `employeeinfo` WHERE `id` = \''.$_SESSION["id"].'\'';
-
     $result = $con->query($query);
     $employeeInfoRow = $result->fetch_assoc();
 
     //check employee clock in earlier and latest time
-    if(Date("H") >= 7 && Date("H") <= 21){     //time to clock in 7am(0700) to 9pm(2100)
+    if(Date("H") >= 21 && Date("H") <= 21){
+        //in between 7am to 9pm will process clock in
 
-        //check employee work on weekend and the current date is Saturday or Sunday
-        if($employeeInfoRow["weekend_work"] == TRUE && (Date("N") == 6 || Date("N") == 7)){
-            //check employee if first clock in current day
-            $query = 'SELECT * FROM `attendance` WHERE `employeeID`=\''.$_SESSION["id"].'\' AND `date`=\''.Date("Y-m-d").'\' ORDER BY `time` DESC';
-            $result = $con->query($query);
-            if(!$result || $result->num_rows == 0){
-                //check employee if got late clock in (apply late 10min)
-                $diffTime = diffTime($employeeInfoRow["work_start_time"], $currentTime);
-                if($diffTime > 10){ //apply late 10min
-                    insertQuery($_SESSION["id"], $_SESSION["name"], "Clock In" , "Late $diffTime minute/s", $diffTime);
+        //check current day are weekend or not
+        if(Date("N") == 6 || Date("N") == 7){
+            //weekend employee will clock in as normal, but non-weekend employee will count as OT
+            if($employeeInfoRow["weekend_work"] == 1){
+                //weekend employee will clock in as normal day
 
-                    //echo "Late";
-                    //echo "<script type='text/javascript'>alert('You have late.');window.location='user-dashboard.php';</script>";
-                } else {
-                    insertQuery($_SESSION["id"], $_SESSION["name"], "Clock In" , "", $diffTime);
+                //check employee if first clock in in current day
+                $query = 'SELECT * FROM `attendance` WHERE `employeeID`=\''.$_SESSION["id"].'\' AND `date`=\''.Date("Y-m-d").'\' ORDER BY `time` DESC';
+                $result = $con->query($query);
+                if(!$result || $result->num_rows == 0){
+                    //first clock in
 
-                    //echo "on time";
-                    //echo "<script type='text/javascript'>alert('You are on time.');window.location='user-dashboard.php';</script>";
-                }
-            } else {
-                //check employee got OT work overnight on previous day
-                $attendanceRow = $result->fetch_assoc();
-                $overnightDuration = diffTime($attendanceRow["time"], "07:00:00");
-                if($attendanceRow["date"] == Date("Y-m-d") && $overnightDuration >= 0 && $attendanceRow["status"] == "Clock Out"){
-                    //make sure last record is clock out status
-                    if($attendanceRow["status"] == "Clock Out"){
-                        //check employee if got late clock in (apply late 10min)
-                        $diffTime = diffTime($employeeInfoRow["work_start_time"], $currentTime);
-                        if($diffTime > 10){ //apply late 10min
-                            insertQuery($_SESSION["id"], $_SESSION["name"], "Clock In" , "Late $diffTime minute/s", $diffTime);
+                    //check employee if late clock in (apply late 10min)
+                    $lateDuration = diffTime($employeeInfoRow["work_start_time"], $currentTime);
+                    if($lateDuration > 10){
+                        //late clock in
 
-                            //echo "Late";
-                            //echo "<script type='text/javascript'>alert('You have late.');window.location='user-dashboard.php';</script>";
-                        } else {
-                            insertQuery($_SESSION["id"], $_SESSION["name"], "Clock In" , "", $diffTime);
-
-                            //echo "on time";
-                            //echo "<script type='text/javascript'>alert('You are on time.');window.location='user-dashboard.php';</script>";
-                        }
+                        insertQuery($_SESSION["id"], $_SESSION["name"], "CLock In", "Late".number_format($lateDuration, 2)."minute/s", $lateDuration);
                     } else {
-                        echo "<script type='text/javascript'>alert('Database error');window.location='user-dashboard.php';</script>";
-
-                        //echo "Database Error";
+                        //not late clock in
+                        
+                        insertQuery($_SESSION["id"], $_SESSION["name"], "CLock In", "", 0);
                     }
                 } else {
-                    //check employee if clock in after 4 time clock in and out
-                    if($result->num_rows <= 4){
-                        $attendanceRow = $result->fetch_assoc();
-                        //make sure last record is clock out status
-                        if($attendanceRow["status"] == "Clock Out"){
+                    //non-first clock in
 
-                            $possibleClockInTime = addTime($attendanceRow["time"], $employeeInfoRow["rest_time"]);
-                            $diffTime = diffTime($currentTime, $possibleClockInTime);
-                            //ckeck employee if late clock in after rest (10min)
-                            if($diffTime > 10){ //apply late 10min
-                                insertQuery($_SESSION["id"], $_SESSION["name"], "Clock In" , "Late $diffTime minute/s after rest", $diffTime);
+                    //check database to make sure last record is clock out
+                    $attendanceRow = $result->fetch_assoc();
+                    if($attendanceRow["status"] == "Clock Out"){
+                        //database safe
 
-                                //echo "late after rest";
+                        //check employee got OT work overnight on previous day
+                        $overnightDuration = diffTime($attendanceRow["time"], "07:00:00");
+                        if($overnightDuration >= 0){
+                            //got overnight work
+
+                            //check employee if late clock in (apply late 10min)
+                            $lateDuration = diffTime($employeeInfoRow["work_start_time"], $currentTime);
+                            if($lateDuration > 10){
+                                //late clock in
+
+                                insertQuery($_SESSION["id"], $_SESSION["name"], "CLock In", "Late".number_format($lateDuration, 2)."minute/s", $lateDuration);
                             } else {
-                                insertQuery($_SESSION["id"], $_SESSION["name"], "Clock In" , "Rest back", $diffTime);
-
-                                //echo "on time after rest";
+                                //not late clock in
+                                
+                                insertQuery($_SESSION["id"], $_SESSION["name"], "CLock In", "", 0);
                             }
                         } else {
-                            echo "<script type='text/javascript'>alert('Database error');window.location='user-dashboard.php';</script>";
+                            //not overnight work (rest)
 
-                            //echo "Database Error";
+                            //check attendance if exceed over 2 time clock in
+                            $count = 0;
+                            while($row = $result->fetch_assoc()){
+                                if($row["status"] == "CLock In"){
+                                    $count++;
+                                }
+                            }
+
+                            if($count < 2){
+                                //employee proceed to clock in after rest
+
+                                //check employee if late clock in (apply late 10min)
+                                $restTime = addTime($attendanceRow["time"], $employeeInfoRow["rest_time"]);
+                                $lateDuration = diffTime($restTime, $currentTime);
+                                if($lateDuration > 10){
+                                    //late clock in rest
+
+                                    insertQuery($_SESSION["id"], $_SESSION["name"], "CLock In", "Late".number_format($lateDuration, 2)."minute/s (rest)", $lateDuration);
+                                } else {
+                                    //not late clock in rest
+                                    
+                                    insertQuery($_SESSION["id"], $_SESSION["name"], "CLock In", "(rest)", 0);
+                                }
+                            } else {
+                                //employee exceed clock in 2 time
+
+                                echo "<script type='text/javascript'>alert('Error: Exceed clock in per day');window.location='user-dashboard.php';</script>";
+                            }
                         }
                     } else {
-                        echo "<script type='text/javascript'>alert('Exceed clock in and out per day');window.location='user-dashboard.php';</script>";
+                        //database error
 
-                        //echo "exceed clock in and out";
+                        echo "<script type='text/javascript'>alert('Database error');window.location='user-dashboard.php';</script>";
+                    }
+                }
+            } else {
+                //non-weekend employee as OT
+
+                //check employee if first clock in in current day
+                $query = 'SELECT * FROM `attendance` WHERE `employeeID`=\''.$_SESSION["id"].'\' AND `date`=\''.Date("Y-m-d").'\' ORDER BY `time` DESC';
+                $result = $con->query($query);
+                if(!$result || $result->num_rows == 0){
+                    //first clock in
+
+                    //clock in as OT day
+                    insertQuery($_SESSION["id"], $_SESSION["name"], "CLock In", "Weekend OT", 0);
+                } else {
+                    //non-first clock in
+
+                    //check database to make sure last record is clock out
+                    $attendanceRow = $result->fetch_assoc();
+                    if($attendanceRow["status"] == "Clock Out"){
+                        //database safe
+
+                        //check employee got OT work overnight on previous day
+                        $overnightDuration = diffTime($attendanceRow["time"], "07:00:00");
+                        if($overnightDuration >= 0){
+                            //got overnight work
+
+                            //clock in as OT day
+                            insertQuery($_SESSION["id"], $_SESSION["name"], "CLock In", "Weekend OT", 0);
+                        } else {
+                            //not overnight work (rest)
+
+                            //check attendance if exceed over 2 time clock in
+                            $count = 0;
+                            while($row = $result->fetch_assoc()){
+                                if($row["status"] == "CLock In"){
+                                    $count++;
+                                }
+                            }
+
+                            if($count < 2){
+                                //employee proceed to clock in after rest
+
+                                //clock in weekend OT rest
+                                insertQuery($_SESSION["id"], $_SESSION["name"], "CLock In", "Weekend OT (rest)", 0);
+                            } else {
+                                //employee exceed clock in 2 time
+
+                                echo "<script type='text/javascript'>alert('Exceed clock in per day');window.location='user-dashboard.php';</script>";
+                            }
+                        }
+                    } else {
+                        //database error
+
+                        echo "<script type='text/javascript'>alert('Database error');window.location='user-dashboard.php';</script>";
                     }
                 }
             }
+
         } else {
-            //check employee if first clock in current day
+            //all employee are normal work
+
+            //check employee if first clock in in current day
             $query = 'SELECT * FROM `attendance` WHERE `employeeID`=\''.$_SESSION["id"].'\' AND `date`=\''.Date("Y-m-d").'\' ORDER BY `time` DESC';
             $result = $con->query($query);
             if(!$result || $result->num_rows == 0){
-                //check employee got OT on weekend or not
-                if(Date("N") == 6 || Date("N") == 7){
-                    insertQuery($_SESSION["id"], $_SESSION["name"], "Clock In" , "OT (Weekend)", $diffTime);
+                //first clock in
+
+                //check employee if late clock in (apply late 10min)
+                $lateDuration = diffTime($employeeInfoRow["work_start_time"], $currentTime);
+                if($lateDuration > 10){
+                    //late clock in
+
+                    insertQuery($_SESSION["id"], $_SESSION["name"], "CLock In", "Late".number_format($lateDuration, 2)."minute/s", $lateDuration);
                 } else {
-                    //check employee if got late clock in (apply late 10min)
-                    $diffTime = diffTime($employeeInfoRow["work_start_time"], $currentTime);
-                    if($diffTime > 10){ //apply late 10min
-                        insertQuery($_SESSION["id"], $_SESSION["name"], "Clock In" , "Late $diffTime minute/s", $diffTime);
-
-                        //echo "Late";
-                        //echo "<script type='text/javascript'>alert('You have late.');window.location='user-dashboard.php';</script>";
-                    } else {
-                        insertQuery($_SESSION["id"], $_SESSION["name"], "Clock In" , "", $diffTime);
-
-                        //echo "on time";
-                        //echo "<script type='text/javascript'>alert('You are on time.');window.location='user-dashboard.php';</script>";
-                    }
+                    //not late clock in
+                    
+                    //clock in
+                    insertQuery($_SESSION["id"], $_SESSION["name"], "CLock In", "", 0);
                 }
             } else {
-                //check employee got OT work overnight on previous day
+                //non-first clock in
+
+                //check database to make sure last record is clock out
                 $attendanceRow = $result->fetch_assoc();
-                $overnightDuration = diffTime($attendanceRow["time"], "07:00:00");
-                if($attendanceRow["date"] == Date("Y-m-d") && $overnightDuration >= 0 && $attendanceRow["status"] == "Clock Out"){
-                    //make sure last record is clock out status
-                    if($attendanceRow["status"] == "Clock Out"){
-                        //check employee if got late clock in (apply late 10min)
-                        $diffTime = diffTime($employeeInfoRow["work_start_time"], $currentTime);
-                        if($diffTime > 10){ //apply late 10min
-                            insertQuery($_SESSION["id"], $_SESSION["name"], "Clock In" , "Late $diffTime minute/s", $diffTime);
+                if($attendanceRow["status"] == "Clock Out"){
+                    //database safe
 
-                            //echo "Late";
-                            //echo "<script type='text/javascript'>alert('You have late.');window.location='user-dashboard.php';</script>";
+                    //check employee got OT work overnight on previous day
+                    $overnightDuration = diffTime($attendanceRow["time"], "07:00:00");
+                    if($overnightDuration >= 0){
+                        //got overnight work
+
+                        //check employee if late clock in (apply late 10min)
+                        $lateDuration = diffTime($employeeInfoRow["work_start_time"], $currentTime);
+                        if($lateDuration > 10){
+                            //late clock in
+
+                            insertQuery($_SESSION["id"], $_SESSION["name"], "CLock In", "Late".number_format($lateDuration, 2)."minute/s", $lateDuration);
                         } else {
-                            insertQuery($_SESSION["id"], $_SESSION["name"], "Clock In" , "", $diffTime);
-
-                            //echo "on time";
-                            //echo "<script type='text/javascript'>alert('You are on time.');window.location='user-dashboard.php';</script>";
+                            //not late clock in
+                            
+                            insertQuery($_SESSION["id"], $_SESSION["name"], "CLock In", "", 0);
                         }
                     } else {
-                        echo "<script type='text/javascript'>alert('Database error');window.location='user-dashboard.php';</script>";
+                        //not overnight work (rest)
 
-                        //echo "Database error";
-                    }
-                } else {
-                    //check employee if clock in after 4 time clock in and out
-                    if($result->num_rows <= 4){
-                        $attendanceRow = $result->fetch_assoc();
-                        //make sure last record is clock out status
-                        if($attendanceRow["status"] == "Clock Out"){
+                        //check attendance if exceed over 2 time clock in
+                        $count = 0;
+                        while($row = $result->fetch_assoc()){
+                            if($row["status"] == "CLock In"){
+                                $count++;
+                            }
+                        }
 
-                            $possibleClockInTime = addTime($attendanceRow["time"], $employeeInfoRow["rest_time"]);
-                            $diffTime = diffTime($currentTime, $possibleClockInTime);
-                            //ckeck employee if late clock in after rest (10min) or 5 if user OT overnight
-                            if($diffTime > 10){ //apply late 10min
-                                insertQuery($_SESSION["id"], $_SESSION["name"], "Clock In" , "Late $diffTime minute/s after rest", $diffTime);
-                                
-                                //echo "late after rest";
+                        if($count < 2){
+                            //employee proceed to clock in after rest
+
+                            //check employee if late clock in (apply late 10min)
+                            $restTime = addTime($attendanceRow["time"], $employeeInfoRow["rest_time"]);
+                            $lateDuration = diffTime($restTime, $currentTime);
+                            if($lateDuration > 10){
+                                //late clock in rest
+
+                                insertQuery($_SESSION["id"], $_SESSION["name"], "CLock In", "Late".number_format($lateDuration, 2)."minute/s (rest)", $lateDuration);
                             } else {
-                                insertQuery($_SESSION["id"], $_SESSION["name"], "Clock In" , "Rest Back", $diffTime);
-
-                                //echo "on time after rest";
+                                //not late clock in rest
+                                
+                                insertQuery($_SESSION["id"], $_SESSION["name"], "CLock In", "(rest)", 0);
                             }
                         } else {
-                            echo "<script type='text/javascript'>alert('Database error');window.location='user-dashboard.php';</script>";
+                            //employee exceed clock in 2 time
 
-                            //echo "Database Error";
+                            echo "<script type='text/javascript'>alert('Exceed clock in per day');window.location='user-dashboard.php';</script>";
                         }
-                    } else {
-                        echo "<script type='text/javascript'>alert('Exceed clock in and out per day');window.location='user-dashboard.php';</script>";
-
-                        //echo "exceed clock in and out";
                     }
+                } else {
+                    //database error
+
+                    echo "<script type='text/javascript'>alert('Database Error');window.location='user-dashboard.php';</script>";
                 }
             }
         }
+
     } else {
+        //alert user current time cannot clock in
+
         echo "<script type='text/javascript'>alert('Sorry, current time cannot clock in.');window.location='user-dashboard.php';</script>";
     }
 ?>
-

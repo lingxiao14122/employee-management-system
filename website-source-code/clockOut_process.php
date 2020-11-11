@@ -1,106 +1,144 @@
 <?php
-    session_start();
-    include_once("dbcon.php");
-    include_once("functions.php");
+    if (isset($_COOKIE["PHPSESSID"])){
+        session_start();
+    } else {
+        echo "<script type='text/javascript'>alert('Error: Haven't Login. Please Login to process.');window.location='login.php';</script>";
+    }
+
+    require_once("dbcom.php");
+    require_once("functions.php");
 
     $currentTime = Date("H:i:s");
+    $currentDate = Date("Y-m-d");
 
     $query = 'SELECT * FROM `employeeinfo` WHERE `id` = \''.$_SESSION["id"].'\'';
-
     $result = $con->query($query);
     $employeeInfoRow = $result->fetch_assoc();
 
-    //check employee work on weekend and current date is Saturday or Sunday
-    if($employeeInfoRow["weekend_work"] == TRUE && (Date("N") == 6 || Date("N") == 7)){
-        //check if employee clock out after start work and before work end time to rest
-        $diffStartTime = diffTime($currentTime, $employeeInfoRow["work_start_time"]);
-        $diffEndTime = diffTime($currentTime, $employeeInfoRow["work_end_time"]);
-        if($diffStartTime < -180 && $diffEndTime > 180){    //give user rest before 3 hours(180 min) work end time
+    //check current day are weekend or not
+    if(Date("N") == 6 || Date("N") == 7){
+        //weekend employee will clock out as normal, but non-weekend employee will count as OT
+        if($employeeInfoRow["weekend_work"] == 1){
+            //weekend employee will work as normal
+
+            //check database to make sure last record is clock in
             $query = 'SELECT * FROM `attendance` WHERE `employeeID`=\''.$_SESSION["id"].'\' AND `date`=\''.Date("Y-m-d").'\' ORDER BY `time` DESC';
             $result = $con->query($query);
-            $attendanceRow = $result->fetch_assoc();
 
-            $timeduration = diffTime($attendanceRow["time"], $currentTime);
+            if(!$result || $result->num_rows == 0){
+                //database error
 
-            //check if employee clock out after 30 min clock in
-            if($timeduration > 30){
-                insertQuery($_SESSION["id"], $_SESSION["name"], "Clock Out" , "Rest", NULL);
-
-                //echo "clock out rest";
+                echo "<script type='text/javascript'>alert('Database Error');window.location='user-dashboard.php';</script>";
             } else {
-                echo "<script type='text/javascript'>alert('Cannot clock out before 30 minutes clock in');window.location='user-dashboard.php';</script>";
-                
-                //echo "cannot clock out after 30 min late clock in";
+                $attendanceRow = $result->fetch_assoc();
+                if($attendanceRow["status"] == "Clock In"){
+                    //database safe
+
+                    //check employee when to clock out (Cannot clock out after work time start 3 hours or before work time end 3 hours)
+                    $startTimeDuration = diffTime($employeeInfoRow["work_start_time"], $currentTime);
+                    $endTimeDuration = diffTime($employeeInfoRow["work_end_time"], $currentTime);
+                    if($startTimeDuration <= 180 || $endTimeDuration >= -180){
+                        //cannot clock out
+
+                        echo "<script type='text/javascript'>alert('Error: Cannot clock out after work time start 3 hours or before work time end 3 hours.');window.location='user-dashboard.php';</script>";
+                    } else if($endTimeDuration <= -10){
+                        //clock out late day
+
+                        //check employee if got OT work
+                        if($endTimeDuration >= 60){
+                            //clock out with OT state
+
+                            insertQuery($_SESSION["id"], $_SESSION["name"], "CLock Out", "OT (".number_format($endTimeDuration, 2).")", $endTimeDuration);
+                        } else {
+                            //normal clock out
+
+                            insertQuery($_SESSION["id"], $_SESSION["name"], "CLock Out", "", 0);
+                        }
+                    } else {
+                        //clock out for rest
+
+                        while($row = $result->fetch_assoc()){
+                            if($row["remark"] == "(rest)"){
+                                //cannot clock out due to already had rest
+                            } else {
+                                //clock out for rest
+                                
+                                insertQuery($_SESSION["id"], $_SESSION["name"], "CLock Out", "(rest)", 0);
+                            }
+                        }
+                    }
+                } else {
+                    //database error
+
+                    echo "<script type='text/javascript'>alert('Database Error');window.location='user-dashboard.php';</script>";
+                }
             }
         } else {
-            echo "<script type='text/javascript'>alert('Cannot clock out before 3 hours work start time');window.location='user-dashboard.php';</script>";
+            //non-weekend employee will count as OT clock out
 
-            //echo "cannot clock out after 3hr clock in";
-        }
-        //check if employee clock before work end time 5min and after 30min
-        if($diffEndTime > 5 && $diffEndTime < -60){
-            insertQuery($_SESSION["id"], $_SESSION["name"], "Clock Out" , "", NULL);
+            $attendanceRow = $result->fetch_assoc();
+            if($attendanceRow["status"] == "Clock In"){
+                //database safe
 
-            //echo "clock out";
-        } else {
-            insertQuery($_SESSION["id"], $_SESSION["name"], "Clock Out" , "OT (".-($diffEndTime).")", -($diffEndTime));
+                insertQuery($_SESSION["id"], $_SESSION["name"], "CLock Out", "(Weekend OT)", 0);
+            } else {
+                //database error
 
-            //echo "clock out OT";
+                echo "<script type='text/javascript'>alert('Database Error');window.location='user-dashboard.php';</script>";
+            }
         }
     } else {
-        //check employee got OT on weekend or not
-        if(Date("N") == 6 || Date("N") == 7){
-            //check employee if clock out before OT clock in time 30 min
-            $query = 'SELECT * FROM `attendance` WHERE `employeeID`=\''.$_SESSION["id"].'\' AND `date`=\''.Date("Y-m-d").'\' ORDER BY `time` DESC';
-            $result = $con->query($query);
-            $attendanceRow = $result->fetch_assoc();
+        //all employee are normal work
 
-            $otTimeduration = diffTime($attendanceRow["time"], $currentTime);
-            if($otTimeduration > 30){   //30 min after clock in
-                insertQuery($_SESSION["id"], $_SESSION["name"], "Clock Out" , "OT (Weekend)", NULL);
+        //check database to make sure last record is clock in
+        $query = 'SELECT * FROM `attendance` WHERE `employeeID`=\''.$_SESSION["id"].'\' AND `date`=\''.Date("Y-m-d").'\' ORDER BY `time` DESC';
+        $result = $con->query($query);
 
-                //echo "clock out OT (Not weekend)";
-            } else {
-                echo "<script type='text/javascript'>alert('Cannot clock out before 30 minutes clock in');window.location='user-dashboard.php';</script>";
+        if(!$result || $result->num_rows == 0){
+            //database error
 
-                //echo "cannot clock out before 30 min clock in";
-            }
+            echo "<script type='text/javascript'>alert('Database Error');window.location='user-dashboard.php';</script>";
         } else {
-            //check if employee clock out after start work and before work end time to rest
-            $diffStartTime = diffTime($currentTime, $employeeInfoRow["work_start_time"]);
-            $diffEndTime = diffTime($currentTime, $employeeInfoRow["work_end_time"]);
-            if($diffStartTime < -180 && $diffEndTime > 180){    //give user rest before 3 hours(180 min) work end time
-                $query = 'SELECT * FROM `attendance` WHERE `employeeID`=\''.$_SESSION["id"].'\' AND `date`=\''.Date("Y-m-d").'\' ORDER BY `time` DESC';
-                $result = $con->query($query);
-                $attendanceRow = $result->fetch_assoc();
+            $attendanceRow = $result->fetch_assoc();
+            if($attendanceRow["status"] == "Clock In"){
+                //database safe
 
-                $timeduration = diffTime($attendanceRow["time"], $currentTime);
+                //check employee when to clock out (Cannot clock out after work time start 3 hours or before work time end 3 hours)
+                $startTimeDuration = diffTime($employeeInfoRow["work_start_time"], $currentTime);
+                $endTimeDuration = diffTime($employeeInfoRow["work_end_time"], $currentTime);
+                if($startTimeDuration <= 180 || $endTimeDuration >= -180){
+                    //cannot clock out
+                } else if($endTimeDuration <= -10){
+                    //clock out late day
 
-                if($timeduration > 30){
-                    insertQuery($_SESSION["id"], $_SESSION["name"], "Clock Out" , "Rest", NULL);
+                    //check employee if got OT work
+                    if($endTimeDuration >= 60){
+                        //clock out with OT state
 
-                    //echo "clock out rest(Not weekend)";
+                        insertQuery($_SESSION["id"], $_SESSION["name"], "CLock Out", "OT (".number_format($endTimeDuration, 2).")", $endTimeDuration);
+                    } else {
+                        //normal clock out
+
+                        insertQuery($_SESSION["id"], $_SESSION["name"], "CLock Out", "", 0);
+                    }
                 } else {
-                    echo "<script type='text/javascript'>alert('Cannot clock out before 30 minutes clock in');window.location='user-dashboard.php';</script>";
+                    //clock out for rest
 
-                    //echo "cannot clock out after 30 min late clock in";
+                    while($row = $result->fetch_assoc()){
+                        if($row["remark"] == "(rest)"){
+                            //cannot clock out due to already had rest
+                        } else {
+                            //clock out for rest
+                            
+                            insertQuery($_SESSION["id"], $_SESSION["name"], "CLock Out", "(rest)", 0);
+                        }
+                    }
                 }
             } else {
-                echo "<script type='text/javascript'>alert('Cannot clock out before 3 hours work start time');window.location='user-dashboard.php';</script>";
+                //database error
 
-                //echo "cannot clock out after 3hr clock in";
-            }
-            //check if employee clock before work end time 5min and after 30min
-            if($diffEndTime > 5 && $diffEndTime < -60){
-                insertQuery($_SESSION["id"], $_SESSION["name"], "Clock Out" , "", NULL);
-
-                //echo "clock out(Not weekend)";
-            } else {
-                insertQuery($_SESSION["id"], $_SESSION["name"], "Clock Out" , "OT (".-($diffEndTime).")", -($diffEndTime));
-
-                //echo "clock out OT(Not weekend)";
+                echo "<script type='text/javascript'>alert('Database Error');window.location='user-dashboard.php';</script>";
             }
         }
     }
-
 ?>
