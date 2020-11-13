@@ -118,7 +118,7 @@
                                 </div>
 
                                 <div class="form-control edit-form">
-                                    <input type="checkbox" id="weekend" name="weekend" value="Bike" />
+                                    <input type="checkbox" id="weekend" name="weekend" value="weekend" />
                                     <label for="weekend"> Week End</label><br />
                                 </div>
 
