@@ -1,3 +1,9 @@
+<?php
+    if (isset($_COOKIE["PHPSESSID"])){
+        session_start();
+    }
+?>
+
 <!DOCTYPE html>
 <!--
 	Ion by TEMPLATED
@@ -77,6 +83,18 @@
             margin: 20px 0;
         }
     </style>
+
+    <script>
+        function confirmDelete(employeeID){
+            var r = confirm("You sure want to Delete this employee?");
+            if(r == true){
+                window.location='admin-deleteUser.php?employeeID=' + employeeID;
+            } else {
+                window.location='admin-manageUser.php';
+            }
+        }
+
+    </script>
 </head>
 
 <body id="top">
@@ -86,7 +104,7 @@
     <!-- Main -->
     <section id="main" class="wrapper style1">
         <header class="major">
-            <h2>Hi, admin</h2>
+            <h2>Hi, <?php echo $_SESSION["name"]; ?> admin</h2>
             <p>Welcome to dashboard, you may browse at navigation</p>
         </header>
         <div class="container">
@@ -103,7 +121,7 @@
                             <h2>Manage User</h2>
 
                             <div class="">
-                                <a href="admin-edit.php" class="btn-action-manageUser addnew">Add New</a>
+                                <a href="admin-addUser.php" class="btn-action-manageUser addnew">Add New</a>
                             </div>
 
 
@@ -129,31 +147,29 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>aaa</td>
-                                        <td>clack</td>
-                                        <td>aaa@isp.com</td>
-                                        <td>1500</td>
-                                        <td>9am</td>
-                                        <td>6pm</td>
-                                        <td>
-                                            <a href="admin-edit.php" class="btn-action-manageUser">Edit</a>
-                                            <a href="admin-edit.php" class="btn-action-manageUser remove">Remove</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    <?php
+                                        require_once("dbcon.php");
+
+                                        $query = "SELECT * FROM `employeeinfo`";
+                                        $result = $con->query($query);
+
+                                        while($row = $result->fetch_assoc()){
+                                            echo "<tr>
+                                                <td>".$row["name"]."</td>
+                                                <td>".$row["position"]."</td>
+                                                <td>".$row["email"]."</td>
+                                                <td>".$row["payroll"]."</td>
+                                                <td>".$row["work_start_time"]."</td>
+                                                <td>".$row["work_end_time"]."</td>
+                                                <td>
+                                                    <a href='admin-editUser.php?employeeID=".$row["ID"]."' class='btn-action-manageUser'>Edit</a>
+                                                    <a onclick='confirmDelete(".$row["ID"].")' class='btn-action-manageUser remove'>Remove</a>
+                                                </td>
+                                            </tr>";
+                                        }
+                                    ?>
                                 </tbody>
                             </table>
-
-
-
-
                         </section>
                     </div>
                 </div>

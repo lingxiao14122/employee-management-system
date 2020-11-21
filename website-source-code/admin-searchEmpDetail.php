@@ -1,4 +1,10 @@
 <?php
+    if (isset($_COOKIE["PHPSESSID"])){
+        session_start();
+    }
+?>
+
+<?php
     if(isset($_POST["submit"])){
         include_once("dbcon.php");
 
@@ -210,7 +216,7 @@
     <!-- Main -->
     <section id="main" class="wrapper style1">
         <header class="major">
-            <h2>Hi, admin</h2>
+            <h2>Hi, <?php echo $_SESSION["name"]; ?> admin</h2>
             <p>Welcome to dashboard, you may browse at navigation</p>
         </header>
         <div class="container">
