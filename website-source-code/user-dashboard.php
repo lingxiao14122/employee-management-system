@@ -249,10 +249,10 @@
                                                 echo "<th class=\"tg-0pky\" colspan=\"4\" align=\"center\">No Record</th>";
                                             } else {
                                                 $size = 0;
-                                                if($result->num_rows <= 15){
+                                                if($result->num_rows <= 10){
                                                     $size = $result->num_rows;
                                                 } else {
-                                                    $size = 15;
+                                                    $size = 10;
                                                 }
                                                 for($i = 0; $i < $size; $i++){
                                                     $row = $result->fetch_assoc();
