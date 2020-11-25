@@ -35,7 +35,7 @@
                 }
             }
         ?>
-        <li><a href="#">Employee report</a></li>
+        <li><a href="admin-employeeReport.php">Employee report</a></li>
         <li><a href="admin-manageUser.php">Manage user</a></li>
         <li><a href="admin-attendance.php">Clock In / Out</a></li>
 
