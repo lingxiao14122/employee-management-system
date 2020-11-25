@@ -133,7 +133,7 @@ if (isset($_COOKIE["PHPSESSID"])) {
                 <div class="row-admin-dashboard">
                     <div class="navigation-admin-dashboard">
 
-                        <?php include("admin-navigation.php") ?>
+                        <?php include("user-navigation.php") ?>
 
                     </div>
 
