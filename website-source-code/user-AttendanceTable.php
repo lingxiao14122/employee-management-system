@@ -106,6 +106,11 @@ if (isset($_COOKIE["PHPSESSID"])) {
             visibility: visible;
             opacity: 1;
         }
+
+        .iframe {
+            width: 109%;
+            height: 900px;
+        }
     </style>
 
 
@@ -136,16 +141,16 @@ if (isset($_COOKIE["PHPSESSID"])) {
 
                             <label>Date: </label>
                             <div class="form-control edit-form ">
-                                <form action="printAttendanceTable.php?id=<?php echo $_SESSION["id"]?>" method="POST" target="calendar_iframe">
+                                <form action="printAttendanceTable.php?id=<?php echo $_SESSION["id"] ?>" method="POST" target="calendar_iframe">
                                     <input type="number" name="year" placeholder="Year" required />
                                     <input type="submit" value="submit">
                                 </form>
-                                
+
                             </div>
 
-                            <iframe name="calendar_iframe"></iframe>
+                            <iframe name="calendar_iframe" src="printAttendanceTable.php" class="iframe"></iframe>
 
-                            
+
 
                         </section>
                     </div>
