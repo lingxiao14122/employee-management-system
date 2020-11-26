@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2020 at 03:34 PM
+-- Generation Time: Nov 26, 2020 at 08:11 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.5
 
@@ -35,7 +35,7 @@ CREATE TABLE `attendance` (
   `employeeID` int(10) NOT NULL,
   `date` date NOT NULL,
   `time` time NOT NULL,
-  `status` varchar(10) NOT NULL,
+  `status` varchar(30) NOT NULL,
   `remark` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -48,7 +48,39 @@ INSERT INTO `attendance` (`ID`, `employeeID`, `date`, `time`, `status`, `remark`
 (2, 1, '2020-11-01', '10:00:00', 'Clock In', ''),
 (3, 2, '2020-11-03', '12:00:00', 'Clock Out', ''),
 (6, 2, '2020-11-04', '09:00:00', 'Clock in', ''),
-(7, 2, '2020-11-04', '12:00:00', 'Clock Out', '');
+(7, 2, '2020-11-04', '12:00:00', 'Clock Out', ''),
+(8, 2, '2020-11-08', '12:25:01', 'Clock In', 'Late 205.01666666667'),
+(9, 2, '2020-11-08', '12:30:00', 'Clock Out', 'Rest'),
+(21, 1, '2020-11-23', '00:00:00', 'Absence', ''),
+(22, 1, '2020-11-24', '00:00:00', 'Absence', ''),
+(23, 1, '2020-11-25', '00:00:00', 'Absence', ''),
+(24, 2, '2020-11-21', '00:00:00', 'Absence', ''),
+(25, 2, '2020-11-22', '00:00:00', 'Absence (With Leave Applied)', 'Leave ID: 4'),
+(26, 2, '2020-11-23', '00:00:00', 'Absence (With Leave Applied)', 'Leave ID: 4'),
+(27, 2, '2020-11-24', '00:00:00', 'Absence (With Leave Applied)', 'Leave ID: 4'),
+(28, 2, '2020-11-25', '00:00:00', 'Absence', '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `attendance_update_log`
+--
+
+DROP TABLE IF EXISTS `attendance_update_log`;
+CREATE TABLE `attendance_update_log` (
+  `id` int(11) NOT NULL,
+  `update_date` date NOT NULL,
+  `update_time` time NOT NULL,
+  `admin_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `attendance_update_log`
+--
+
+INSERT INTO `attendance_update_log` (`id`, `update_date`, `update_time`, `admin_id`) VALUES
+(1, '2020-11-21', '00:00:00', 1),
+(7, '2020-11-25', '16:10:38', 1);
 
 -- --------------------------------------------------------
 
@@ -78,7 +110,7 @@ CREATE TABLE `employeeinfo` (
 --
 
 INSERT INTO `employeeinfo` (`ID`, `name`, `gender`, `position`, `height`, `phone`, `email`, `address`, `payroll`, `work_start_time`, `work_end_time`, `rest_time`, `weekend_work`) VALUES
-(1, 'aaa', 'male', 'cleck', 170, '0123456789', 'aaa@isp.com', '1-2-15, Condo. A', 1500, '00:00:00', '00:00:00', '', 0),
+(1, 'aaa', 'male', 'cleck', 170, '0123456789', 'aaa@isp.com', '1-2-15, Condo. A', 1500, '00:00:00', '00:00:00', '+2 Hours 30 Minutes', 0),
 (2, 'bbb', 'female', 'cleck', 170, '0123456789', 'bbb@isp.com', '1-2-15, Condo. A', 1500, '09:00:00', '18:00:00', '+1 Hour', 1);
 
 -- --------------------------------------------------------
@@ -91,7 +123,7 @@ DROP TABLE IF EXISTS `leaveapplication`;
 CREATE TABLE `leaveapplication` (
   `ID` int(10) NOT NULL,
   `employeeID` int(10) NOT NULL,
-  `reason` varchar(20) NOT NULL,
+  `reason` varchar(100) NOT NULL,
   `dateRequest_start` date NOT NULL,
   `dateRequest_end` date NOT NULL,
   `approval` varchar(10) NOT NULL,
@@ -105,7 +137,8 @@ CREATE TABLE `leaveapplication` (
 INSERT INTO `leaveapplication` (`ID`, `employeeID`, `reason`, `dateRequest_start`, `dateRequest_end`, `approval`, `remark`) VALUES
 (1, 2, 'sick', '2020-11-09', '2020-11-09', 'Reject', ''),
 (2, 2, 'Sick leave', '2020-11-11', '2020-11-11', 'Accept', 'sick'),
-(3, 2, 'Bereavement leave (I', '2020-12-12', '2020-12-12', 'Pending', '');
+(3, 2, 'Bereavement leave (Immediate Family)', '2020-12-12', '2020-12-12', 'Pending', ''),
+(4, 2, 'Bereavement leave (Immediate Family)', '2020-11-22', '2020-11-24', 'Accept', '');
 
 -- --------------------------------------------------------
 
@@ -141,6 +174,12 @@ ALTER TABLE `attendance`
   ADD KEY `employeeID` (`employeeID`);
 
 --
+-- Indexes for table `attendance_update_log`
+--
+ALTER TABLE `attendance_update_log`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `employeeinfo`
 --
 ALTER TABLE `employeeinfo`
@@ -168,19 +207,25 @@ ALTER TABLE `logininfo`
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- AUTO_INCREMENT for table `attendance_update_log`
+--
+ALTER TABLE `attendance_update_log`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `employeeinfo`
 --
 ALTER TABLE `employeeinfo`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `leaveapplication`
 --
 ALTER TABLE `leaveapplication`
-  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
