@@ -109,7 +109,7 @@ if (isset($_COOKIE["PHPSESSID"])) {
 
         .iframe {
             width: 109%;
-            height: 900px;
+            height: 43em;
         }
     </style>
 
@@ -148,7 +148,7 @@ if (isset($_COOKIE["PHPSESSID"])) {
 
                             </div>
 
-                            <iframe name="calendar_iframe" src="printAttendanceTable.php" class="iframe"></iframe>
+                            <iframe name="calendar_iframe" class="iframe"></iframe>
 
 
 
