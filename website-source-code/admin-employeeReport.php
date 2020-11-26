@@ -132,7 +132,7 @@ if (isset($_COOKIE["PHPSESSID"])) {
                                                 <td>" . $row["work_start_time"] . "</td>
                                                 <td>" . $row["work_end_time"] . "</td>
                                                 <td>
-                                                    <a href='admin-editUser.php?employeeID=" . $row["ID"] . "' class='btn-action'>Open</a>
+                                                    <a href='admin-attendanceTable.php?id=".$row["ID"]."' class='btn-action'>Open</a>
                                                     
                                                 </td>
                                             </tr>";

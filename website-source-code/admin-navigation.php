@@ -35,9 +35,20 @@
                 }
             }
         ?>
-        <li><a href="admin-employeeReport.php">Employee report</a></li>
+        <li><a href="admin-employeeReport.php">Employee Attendance report</a></li>
         <li><a href="admin-manageUser.php">Manage user</a></li>
         <li><a href="admin-attendance.php">Clock In / Out</a></li>
+
+        <?php
+            $query = "SELECT * FROM `attendance_update_log`";
+            $result = $con->query($query);
+
+            if(!$result || $result->num_rows == 0){
+                echo "<li><a href=\"admin-updateDatabaseAttendance.php\">Setup Database Attendance(First Time)</a></li>";
+            } else {
+                echo "<li><a href=\"admin-updateDatabaseAttendance.php\">Update Database Attendance</a></li>";
+            }
+        ?>
 
     </ul>
 </section>

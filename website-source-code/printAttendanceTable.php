@@ -23,7 +23,7 @@
 
         .tooltip .tooltiptext {
             visibility: hidden;
-            width: 300px;
+            width: 500px;
             background-color: #555;
             color: #fff;
             text-align: center;
@@ -32,8 +32,8 @@
             position: absolute;
             z-index: 1;
             bottom: 125%;
-            left: 50%;
-            margin-left: -69px;
+            left: -230px;
+            margin-left: 0px;
             opacity: 0;
             transition: opacity 0.3s;
         }
@@ -80,6 +80,10 @@
     require_once("dbcon.php");
     $id = $_GET["id"];
     $year = $_POST["year"];
+
+    if($year < 1990 || $year > 2100){
+        echo "";
+    }
 
     echo "<div style=\"overflow-x:auto; overflow: visible;\">
     <table>
@@ -129,14 +133,26 @@
 
             for($j = 1; $j <= $numberDay; $j++){
                 $date = "$year-$i-$j";
-                echo $date;
                 $selectQuery = 'SELECT * FROM `attendance` WHERE `employeeID` = \''.$id.'\' AND `date` = \''.$date.'\'';
                 $selectResult = $con->query($selectQuery);
 
                 if(!$selectResult || $selectResult->num_rows == 0){
                     echo "<td>$j</td>";
+                } else if($selectResult->num_rows == 1){
+                    $row = $selectResult->fetch_assoc();
+                    if($row["status"] == "Absence"){
+                        echo "<td style=\"background-color: #FFAAAA; color: white;\" class=\"tooltip\">$j<span class=\"tooltiptext\">";
+                        echo "Status: ".$row["status"];
+                        echo ", Remark: ".$row["remark"];
+                        echo "</span></td>";
+                    } else {
+                        echo "<td style=\"background-color: #b5f4ff;\" class=\"tooltip\">$j<span class=\"tooltiptext\">";
+                        echo "Status: ".$row["status"];
+                        echo ", Remark: ".$row["remark"];
+                        echo "</span></td>";
+                    }
                 } else {
-                    echo "<td class=\"tooltip\">$j<span class=\"tooltiptext\">";
+                    echo "<td style=\"background-color: #ccffd4;\" class=\"tooltip\">$j<span class=\"tooltiptext\">";
                     $count = 0;
                     while($row = $selectResult->fetch_assoc()){
                         echo "Time: ".$row["time"];

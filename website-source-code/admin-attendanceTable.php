@@ -123,7 +123,7 @@ if (isset($_COOKIE["PHPSESSID"])) {
     <!-- Main -->
     <section id="main" class="wrapper style1">
         <header class="major">
-            <h2>Hi, <?php echo $_SESSION["name"]; ?> user</h2>
+            <h2>Hi, <?php echo $_SESSION["name"]; ?> admin</h2>
             <p>Welcome to dashboard, you may browse at navigation</p>
         </header>
         <div class="container">
@@ -131,7 +131,7 @@ if (isset($_COOKIE["PHPSESSID"])) {
                 <div class="row-admin-dashboard">
                     <div class="navigation-admin-dashboard">
 
-                        <?php include("user-navigation.php") ?>
+                        <?php include("admin-navigation.php") ?>
 
                     </div>
 
@@ -141,7 +141,7 @@ if (isset($_COOKIE["PHPSESSID"])) {
 
                             <label>Date: </label>
                             <div class="form-control edit-form ">
-                                <form action="printAttendanceTable.php?id=<?php echo $_SESSION["id"] ?>" method="POST" target="calendar_iframe">
+                                <form action="printAttendanceTable.php?id=<?php echo $_GET["id"] ?>" method="POST" target="calendar_iframe">
                                     <input type="number" name="year" placeholder="Year" required />
                                     <input type="submit" value="submit">
                                 </form>
