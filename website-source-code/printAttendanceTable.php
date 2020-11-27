@@ -153,107 +153,107 @@
     $year = $_POST["year"];
 
     if ($year < 1990 || $year > 2100) {
-        echo "";
-    }
+        echo "<script type='text/javascript'>alert('Year must in range of 1900 to 2100')</script>";
+    } else {
+        echo "<div style=\"overflow-x:auto; overflow: visible;\">
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                    <td>Day</td>
+                </tr>
+            </thead>
+            <tbody>";
 
-    echo "<div style=\"overflow-x:auto; overflow: visible;\">
-    <table>
-        <thead>
-            <tr>
-                <th></th>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-                <td>Day</td>
-            </tr>
-        </thead>
-        <tbody>";
+        for ($i = 1; $i <= 12; $i++) {
+            $month = "$year-$i-1";
+            $numberDay = Date("t", strtotime($month));
+            echo "<tr>";
+            echo "<th>" . Date("M", strtotime($month)) . "</th>";
 
-    for ($i = 1; $i <= 12; $i++) {
-        $month = "$year-$i-1";
-        $numberDay = Date("t", strtotime($month));
-        echo "<tr>";
-        echo "<th>" . Date("M", strtotime($month)) . "</th>";
+            for ($j = 1; $j <= $numberDay; $j++) {
+                $date = "$year-$i-$j";
+                $selectQuery = 'SELECT * FROM `attendance` WHERE `employeeID` = \'' . $id . '\' AND `date` = \'' . $date . '\'';
+                $selectResult = $con->query($selectQuery);
 
-        for ($j = 1; $j <= $numberDay; $j++) {
-            $date = "$year-$i-$j";
-            $selectQuery = 'SELECT * FROM `attendance` WHERE `employeeID` = \'' . $id . '\' AND `date` = \'' . $date . '\'';
-            $selectResult = $con->query($selectQuery);
-
-            if($j < 8){
-                $tooltip = "tooltip_right";
-            } else if($j > 25){
-                $tooltip = "tooltip_left";
-            } else {
-                $tooltip = "tooltiptext";
-            }
-
-            if (!$selectResult || $selectResult->num_rows == 0) {
-                echo "<td>$j</td>";
-            } else if ($selectResult->num_rows == 1) {
-                $row = $selectResult->fetch_assoc();
-                if ($row["status"] == "Absence") {
-                    echo "<td style=\"background-color: #FFAAAA; color: white;\" class=\"tooltip\">$j<span class=\"$tooltip\">";
-                    echo "Status: " . $row["status"];
-                    echo ", Remark: " . $row["remark"];
-                    echo "</span></td>";
+                if($j < 8){
+                    $tooltip = "tooltip_right";
+                } else if($j > 25){
+                    $tooltip = "tooltip_left";
                 } else {
-                    echo "<td style=\"background-color: #b5f4ff;\" class=\"tooltip\">$j<span class=\"$tooltip\">";
-                    echo "Status: " . $row["status"];
-                    echo ", Remark: " . $row["remark"];
+                    $tooltip = "tooltiptext";
+                }
+
+                if (!$selectResult || $selectResult->num_rows == 0) {
+                    echo "<td>$j</td>";
+                } else if ($selectResult->num_rows == 1) {
+                    $row = $selectResult->fetch_assoc();
+                    if ($row["status"] == "Absence") {
+                        echo "<td style=\"background-color: #FFAAAA; color: white;\" class=\"tooltip\">$j<span class=\"$tooltip\">";
+                        echo "Status: " . $row["status"];
+                        echo ", Remark: " . $row["remark"];
+                        echo "</span></td>";
+                    } else {
+                        echo "<td style=\"background-color: #b5f4ff;\" class=\"tooltip\">$j<span class=\"$tooltip\">";
+                        echo "Status: " . $row["status"];
+                        echo ", Remark: " . $row["remark"];
+                        echo "</span></td>";
+                    }
+                } else {
+                    echo "<td style=\"background-color: #ccffd4;\" class=\"tooltip\">$j<span class=\"$tooltip\">";
+                    $count = 0;
+                    while ($row = $selectResult->fetch_assoc()) {
+                        echo "Time: " . $row["time"];
+                        echo ", Status: " . $row["status"];
+                        echo ", Remark: " . $row["remark"];
+
+                        if ($count < $selectResult->num_rows) {
+                            echo "<br>";
+                        }
+                        $count++;
+                    }
                     echo "</span></td>";
                 }
-            } else {
-                echo "<td style=\"background-color: #ccffd4;\" class=\"tooltip\">$j<span class=\"$tooltip\">";
-                $count = 0;
-                while ($row = $selectResult->fetch_assoc()) {
-                    echo "Time: " . $row["time"];
-                    echo ", Status: " . $row["status"];
-                    echo ", Remark: " . $row["remark"];
-
-                    if ($count < $selectResult->num_rows) {
-                        echo "<br>";
-                    }
-                    $count++;
-                }
-                echo "</span></td>";
             }
+
+
+            echo "</tr>";
         }
 
-
-        echo "</tr>";
-    }
-
-    echo "</tbody>
-        </table>
-    </div>";
+        echo "</tbody>
+            </table>
+        </div>";
+        }
     ?>
 
 </body>
