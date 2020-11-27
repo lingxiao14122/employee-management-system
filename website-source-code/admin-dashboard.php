@@ -148,6 +148,21 @@
 
     <?php include("navbar_top.php") ?>
 
+    <?php
+    require_once("dbcon.php");
+        $yearMonth = Date("Y-m");
+        $startDate = "$yearMonth-1";
+        $endDate = "$yearMonth-".Date("t");
+        $absenceQuery = "SELECT * FROM `attendance` WHERE `status` LIKE 'Absence%' AND `date` BETWEEN '$startDate' AND '$endDate'";
+        $absenceResult = $con->query($absenceQuery);
+        $absenceCount = $absenceResult->num_rows;
+
+        $attendanceLogQuery = "SELECT * FROM `attendance_update_log` ORDER BY `update_date` DESC, `update_time` DESC";
+        $attendanceLogResult = $con->query($attendanceLogQuery);
+        $attendanceLogRow = $attendanceLogResult->fetch_assoc();
+        $LastUpdateDate = $attendanceLogRow["update_date"];
+    ?>
+
     <!-- Main -->
     <section id="main" class="wrapper style1">
         <header class="major">
@@ -171,55 +186,29 @@
                                 <!--White card-->
                                 <div class="attendance-card attendance-present">
                                     <div class="attendance-text">
-                                        <p class=" attendance-count">0</p>
+                                        <p class=" attendance-count"><?php echo $absenceCount;?></p>
                                     </div>
                                     <div class="attendance-text">
-                                        <p class="attendance-p ">Present</p>
+                                        <p class="attendance-p ">Absent in this Month</p>
                                     </div>
                                 </div>
                                 <!--Grey card-->
                                 <div class="attendance-card attendance-present">
                                     <div class="attendance-text">
                                         <p class=" attendance-lastup">
-                                            2020-11-27
+                                            <?php echo $LastUpdateDate;?>
                                         </p>
                                     </div>
                                     <div class="attendance-text">
                                         <p class="attendance-p ">
-                                            Last Update
+                                            Last Attendance Update
                                         </p>
                                     </div>
                                 </div>
                             </div>
-                            <hr />
-                            <h2>Check In/ Check Out</h2>
-
-                            <div class="attendance-table-div">
-                                <table class="tg">
-                                    <thead>
-                                        <tr>
-                                            <th class="tg-0pky">No.</th>
-                                            <th class="tg-0lax">Name</th>
-                                            <th class="tg-0lax">Status/Action</th>
-                                            <th class="tg-0lax">Timestamp</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="tg-0lax"></td>
-                                            <td class="tg-0lax"></td>
-                                            <td class="tg-0lax"></td>
-                                            <td class="tg-0lax"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-
                         </section>
                     </div>
                 </div>
-
                 <hr class="major" />
             </div>
         </div>
