@@ -72,11 +72,7 @@
         .attendance-present {
             background: white;
         }
-
-        .attendance-absent {
-            background-color: rgba(0, 0, 0, 0.12);
-        }
-
+        
         .attendance-text {
             width: fit-content;
 
@@ -96,7 +92,7 @@
         .attendance-count {
             width: fit-content;
             text-align: center;
-            margin: 109px;
+            margin: 87px;
             font-size: 96px;
         }
 
@@ -135,10 +131,15 @@
         }
 
         .attendance-table-div {
-            
-            
             border-width: 4px;
             height: 25em;
+        }
+
+        .attendance-lastup {
+            width: fit-content;
+            text-align: center;
+            margin: 87px;
+            font-size: 25px;
         }
     </style>
 </head>
@@ -177,12 +178,16 @@
                                     </div>
                                 </div>
                                 <!--Grey card-->
-                                <div class="attendance-card attendance-absent">
+                                <div class="attendance-card attendance-present">
                                     <div class="attendance-text">
-                                        <p class=" attendance-count">0</p>
+                                        <p class=" attendance-lastup">
+                                            2020-11-27
+                                        </p>
                                     </div>
                                     <div class="attendance-text">
-                                        <p class="attendance-p ">Absent</p>
+                                        <p class="attendance-p ">
+                                            Last Update
+                                        </p>
                                     </div>
                                 </div>
                             </div>

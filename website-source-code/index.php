@@ -55,7 +55,7 @@ if (isset($_COOKIE["PHPSESSID"])) {
         if (isset($_COOKIE["PHPSESSID"])) {
           echo "<li><a href='logout_process.php' class='button big special'>Login Out</a></li>";
         } else {
-          echo "<li><a href='login.php' class='button big special'>Login Out</a></li>";
+          echo "<li><a href='login.php' class='button big special'>Login In</a></li>";
         }
 
 
