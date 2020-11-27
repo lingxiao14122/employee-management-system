@@ -19,6 +19,7 @@
             $rows = $result->fetch_assoc();
             $_SESSION["id"] = $rows["ID"];
             $_SESSION["name"] = $rows["name"];
+            $_SESSION["usertype"] = $row["usertype"];
             echo "<script type='text/javascript'>alert('Login Successful, ".$_SESSION["name"]."');window.location='admin-dashboard.php';</script>";
         } else {
             session_start();
@@ -28,6 +29,7 @@
             $rows = $result->fetch_assoc();
             $_SESSION["id"] = $rows["ID"];
             $_SESSION["name"] = $rows["name"];
+            $_SESSION["usertype"] = $row["usertype"];
             echo "<script type='text/javascript'>alert('Login Successful, ".$_SESSION["name"]."');window.location='user-dashboard.php';</script>";
         }
     } else {

@@ -10,7 +10,12 @@
       <?php
 
       if (isset($_COOKIE["PHPSESSID"])) {
-        echo "<li><a href='user-dashboard.php'>Dashboard</a></li>";
+
+        if($_SESSION["usertype"] == "admin"){
+          echo "<li><a href='admin-dashboard.php'>Dashboard</a></li>";
+        } else {
+          echo "<li><a href='user-dashboard.php'>Dashboard</a></li>";
+        }
       }
 
       if (!isset($_COOKIE["PHPSESSID"])) {
