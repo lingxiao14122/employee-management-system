@@ -53,9 +53,9 @@ if (isset($_COOKIE["PHPSESSID"])) {
 
         <?php
         if (isset($_COOKIE["PHPSESSID"])) {
-          echo "<li><a href='logout_process.php' class='button big special'>Login Out</a></li>";
+          echo "<li><a href='logout_process.php' class='button big special'>Log Out</a></li>";
         } else {
-          echo "<li><a href='login.php' class='button big special'>Login In</a></li>";
+          echo "<li><a href='login.php' class='button big special'>Log In</a></li>";
         }
 
 
@@ -77,10 +77,9 @@ if (isset($_COOKIE["PHPSESSID"])) {
           <section class="special box">
             <!-- <i class="icon fa-user-clock major"></i> -->
             <i class="icon fa-user-clock fas major"></i>
-            <h3>Clock In</h3>
+            <h3>Clock In/Clock Out</h3>
             <p>
-              Use brand new clock in tool to process clock in and clock out
-              .
+              Use brand new clock in/clock out tool to process clock in and clock out.
             </p>
           </section>
         </div>
@@ -89,7 +88,7 @@ if (isset($_COOKIE["PHPSESSID"])) {
             <i class="icon fa-sign-out-alt fas major"></i>
             <h3>Apply Leave</h3>
             <p>
-              Try here and use the new tools to apply for leave .
+              Use the new tools to apply for leave.
             </p>
           </section>
         </div>
@@ -98,7 +97,7 @@ if (isset($_COOKIE["PHPSESSID"])) {
             <i class="icon fa-cog major"></i>
             <h3>Setting</h3>
             <p>
-              Advanced tools to prepare you in revolution 4.0.
+              Advanced tools prepared for you in revolution 4.0.
             </p>
           </section>
         </div>
@@ -109,15 +108,15 @@ if (isset($_COOKIE["PHPSESSID"])) {
   <!-- Two -->
   <section id="two" class="wrapper style2">
     <header class="major">
-      <h2>Commodo accumsan aliquam</h2>
-      <p>Amet nisi nunc lorem accumsan</p>
+      <h2>Features</h2>
+      <p>Find out the features that we made.</p>
     </header>
     <div class="container">
       <div class="row">
         <div class="6u">
           <section class="special">
-            <a href="#" class="image fit"><img src="images/pic04.jpg" alt="" /></a>
-            <h3>Software develpoed in house</h3>
+            <a href="#" class="image fit"><img src="images/pic05.jpg" alt="" /></a>
+            <h3>Clock in and out in real time</h3>
             <p>
               Our software development team created this application to facilitate 
               the automation and embracing technology.In regards to the new project, 
@@ -131,8 +130,8 @@ if (isset($_COOKIE["PHPSESSID"])) {
         </div>
         <div class="6u">
           <section class="special">
-            <a href="#" class="image fit"><img src="images/pic02.jpg" alt="" /></a>
-            <h3>Neque ornare adipiscing</h3>
+            <a href="#" class="image fit"><img src="images/pic06.jpg" alt="" /></a>
+            <h3>Employee Attendance Report</h3>
             <p>
               Eget mi ac magna cep lobortis faucibus accumsan enim lacinia
               adipiscing metus urna adipiscing cep commodo id. Ac quis arcu

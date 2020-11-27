@@ -136,10 +136,9 @@
         }
 
         .attendance-lastup {
-            width: fit-content;
             text-align: center;
-            margin: 87px;
-            font-size: 25px;
+            margin: 87px 45px;
+            font-size: 41px;
         }
     </style>
 </head>
