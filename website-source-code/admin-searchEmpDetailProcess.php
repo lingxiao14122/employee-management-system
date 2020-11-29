@@ -208,7 +208,7 @@
                                         if($name == "all" || $name == "All" || $name == "ALL"){
                                             $query = "SELECT * FROM `employeeinfo`";
                                         } else {
-                                            $query = "SELECT * FROM `employeeinfo` WHERE `name` = '$name'";
+                                            $query = "SELECT * FROM `employeeinfo` WHERE `name` LIKE '$name%'";
                                         }
 
                                         $result = $con->query($query);
