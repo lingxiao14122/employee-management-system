@@ -46,7 +46,7 @@ if (isset($_COOKIE["PHPSESSID"])) {
     <div class="inner">
       <h2>Employee Management</h2>
       <p>
-        Sign In Now to Clock In and Receive Updates of Your Team.
+        Sign In Now to Clock In and Receive Updates.
 
       </p>
       <ul class="actions">
@@ -88,7 +88,7 @@ if (isset($_COOKIE["PHPSESSID"])) {
             <i class="icon fa-sign-out-alt fas major"></i>
             <h3>Apply Leave</h3>
             <p>
-              Use the new tools to apply for leave.
+              Use the new tools to apply for leave. Faster approval with digital forms.
             </p>
           </section>
         </div>
@@ -133,11 +133,9 @@ if (isset($_COOKIE["PHPSESSID"])) {
             <a href="#" class="image fit"><img src="images/pic06.jpg" alt="" /></a>
             <h3>Employee Attendance Report</h3>
             <p>
-              Eget mi ac magna cep lobortis faucibus accumsan enim lacinia
-              adipiscing metus urna adipiscing cep commodo id. Ac quis arcu
-              amet. Arcu nascetur lorem adipiscing non faucibus odio nullam
-              arcu lobortis. Aliquet ante feugiat. Turpis aliquet ac posuere
-              volutpat lorem arcu aliquam lorem.
+              We've designed a calendar view UI to help visualize attendance records
+              The cells are also color coded based on status, mouse over the dates and
+               it will provide more context about their stats.
             </p>
             <ul class="actions">
               <li><a href="#" class="button alt">Learn More</a></li>
