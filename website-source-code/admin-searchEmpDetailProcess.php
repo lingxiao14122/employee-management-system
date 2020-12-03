@@ -188,7 +188,7 @@
                             <h2>Search Employee Detail</h2><i class="glyphicon glyphicon-search"></i>
 
                             <div class="form-group">
-                                <form action="admin-searchEmpDetailprocess.php" method="POST">
+                                <form action="admin-searchEmpDetailProcess.php" method="POST">
                                 <label class="search-label">Name</label>
 
                                 <input class="search-input" name="name" placeholder="Enter 'all' to print out all employee details">
